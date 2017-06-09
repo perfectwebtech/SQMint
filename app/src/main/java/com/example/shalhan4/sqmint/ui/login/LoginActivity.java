@@ -1,0 +1,100 @@
+package com.example.shalhan4.sqmint.ui.login;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.shalhan4.sqmint.R;
+import com.example.shalhan4.sqmint.ui.main.MainActivity;
+
+import org.w3c.dom.Text;
+
+/**
+ * Created by shalhan4 on 4/27/2017.
+ */
+
+public class LoginActivity extends AppCompatActivity implements ILoginActivity, View.OnClickListener {
+
+    LoginPresenter mPresenter;
+    EditText etUsername;
+    EditText etPassword;
+    Button bLogin;
+    TextView tvEmptyField;
+    ProgressBar mProgress;
+    private int mProgressStatus = 0;
+    private Handler mHandler = new Handler();
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
+        this.mPresenter = new LoginPresenter(this);
+        this.etUsername = (EditText) findViewById(R.id.etUsername);
+        this.etPassword = (EditText) findViewById(R.id.etPassword);
+        this.bLogin = (Button) findViewById(R.id.btnLogin);
+        this.tvEmptyField = (TextView) findViewById(R.id.tvEmptyField);
+        this.mProgress = (ProgressBar) findViewById(R.id.progressBar);
+
+
+        this.bLogin.setOnClickListener(LoginActivity.this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        mPresenter.onServerLoginClick(LoginActivity.this, this.etUsername.getText().toString(), this.etPassword.getText().toString());
+    }
+
+    @Override
+    public void loginIsValid() {
+        this.mProgress.setVisibility(View.VISIBLE);
+        // Start lengthy operation in a background thread
+        new Thread(new Runnable() {
+            public void run() {
+                while ( mProgressStatus < 100) {
+                    mProgressStatus += 1;
+
+                    // Update the progress bar
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            mProgress.setProgress(mProgressStatus);
+                        }
+                    });
+                }
+            }
+        }).start();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void loginNotValid(){
+        this.tvEmptyField.setText("Your username or password is not valid");
+        this.tvEmptyField.setVisibility(View.VISIBLE);
+
+        this.etUsername.getBackground().mutate().setColorFilter(getResources().getColor(R.color.fieldOnError), PorterDuff.Mode.SRC_ATOP);
+        this.etPassword.getBackground().mutate().setColorFilter(getResources().getColor(R.color.fieldOnError), PorterDuff.Mode.SRC_ATOP);
+
+    }
+
+    @Override
+    public void fieldIsNull(int fieldUsername, int fieldPassword){
+        this.tvEmptyField.setVisibility(View.VISIBLE);
+
+        if(fieldUsername == 0)
+            this.etUsername.getBackground().mutate().setColorFilter(getResources().getColor(R.color.fieldOnError), PorterDuff.Mode.SRC_ATOP);
+        if(fieldPassword == 0)
+            this.etPassword.getBackground().mutate().setColorFilter(getResources().getColor(R.color.fieldOnError), PorterDuff.Mode.SRC_ATOP);
+    }
+}

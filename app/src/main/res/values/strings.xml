@@ -5,4 +5,18 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!--Login Activity-->
+    <string name="btn_login">Login</string>
+    <string name="et_username">Username</string>
+    <string name="et_password">Password</string>
+    <string name="tv_empty_field">Fill the empty field below</string>
+
+    <!-- Main Activity -->
+    <string name="job_fragment">Jobs</string>
+    <string name="usage_fragment">Usage</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
