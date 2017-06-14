@@ -2,12 +2,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.shalhan4.sqmint.ui.usage.UsageFragment">
+    tools:context="com.example.shalhan4.sqmint.ui.usage.UsageFragment"
+>
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="fragment usage" />
+        >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="CPU"
+                android:textColor="@color/colorText"
+                android:textSize="18sp" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/cpu_chart"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_marginTop="42dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Memory"
+                android:textColor="@color/colorText"
+                android:textSize="18sp"
+                android:layout_below="@+id/cpu_chart"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="24dp"/>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/memory_chart"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_marginTop="460dp"/>
+        </RelativeLayout>
+    </ScrollView>
 </FrameLayout>
