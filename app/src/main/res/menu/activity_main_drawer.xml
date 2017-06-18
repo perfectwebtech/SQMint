@@ -12,12 +12,15 @@
             android:title="Usage" />
     </group>
 
+
     <item android:title="Super User">
         <menu>
-            <item
-                android:id="@+id/nav_user"
-                android:icon="@drawable/ic_menu_user"
-                android:title="Users" />
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_user"
+                    android:icon="@drawable/ic_menu_user"
+                    android:title="Users" />
+            </group>
         </menu>
     </item>
 

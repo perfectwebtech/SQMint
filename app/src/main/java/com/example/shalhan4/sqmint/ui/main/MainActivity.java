@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import com.example.shalhan4.sqmint.R;
 import com.example.shalhan4.sqmint.ui.job.JobFragment;
 import com.example.shalhan4.sqmint.ui.usage.UsageFragment;
+import com.example.shalhan4.sqmint.ui.user.UserFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, IMainActivity {
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity
 
         JobFragment fragmentJob;
         UsageFragment fragmentUsage;
+        UserFragment fragmentUser;
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         if (id == R.id.nav_job) {
@@ -95,7 +97,10 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.frame, fragmentUsage);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_user) {
-
+            this.toolbar.setTitle(R.string.user_fragment);
+            fragmentUser = new UserFragment();
+            fragmentTransaction.replace(R.id.frame, fragmentUser);
+            fragmentTransaction.commit();
         }
 
         this.drawer.closeDrawer(GravityCompat.START);

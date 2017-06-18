@@ -19,17 +19,19 @@ public class LoginPresenter implements ILoginPresenter {
     @Override
     public void onServerLoginClick(Context context, String username, String password) {
 
-        if(username.trim().length() == 0 || password.trim().length() == 0)
-        {
-            this.mLoginActivity.fieldIsNull(username.trim().length(), password.trim().length());
-        }
-        else
-        {
-            if(username.equals("shalhan") && password.equals("123456"))
-                this.mLoginActivity.loginIsValid();
-            else
-                this.mLoginActivity.loginNotValid();
-        }
+        this.mLoginActivity.loginIsValid();
+
+//        if(username.trim().length() == 0 || password.trim().length() == 0)
+//        {
+//            this.mLoginActivity.fieldIsNull(username.trim().length(), password.trim().length());
+//        }
+//        else
+//        {
+//            if(username.equals("") && password.equals(""))
+//                this.mLoginActivity.loginIsValid();
+//            else
+//                this.mLoginActivity.loginNotValid();
+//        }
 
     }
 }

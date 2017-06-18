@@ -19,7 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.job.job_detail.JobDetailActivity"></activity>
+        <activity android:name=".ui.job.job_detail.JobDetailActivity" />
+        <activity
+            android:name=".ui.user.user_detail.UserDetailActivity"
+            android:label="@string/title_activity_user_detail"></activity>
     </application>
 
 </manifest>

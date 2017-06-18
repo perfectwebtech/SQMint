@@ -15,8 +15,11 @@
     <!-- Main Activity -->
     <string name="job_fragment">Jobs</string>
     <string name="usage_fragment">Usage</string>
+    <string name="user_fragment">User</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_user">UserActivity</string>
+    <string name="title_activity_user_detail">UserDetailActivity</string>
 
 </resources>
