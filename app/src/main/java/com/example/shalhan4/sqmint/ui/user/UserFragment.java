@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.shalhan4.sqmint.R;
 import com.example.shalhan4.sqmint.ui.job.job_detail.JobDetailActivity;
+import com.example.shalhan4.sqmint.ui.user.user_detail.UserDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,7 @@ public class UserFragment extends Fragment implements UserView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                mJobPresenter.getJobDetail(position);
+                mUserPresenter.getUserDetail(position);
             }
         });
 
