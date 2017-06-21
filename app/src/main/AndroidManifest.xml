@@ -22,7 +22,10 @@
         <activity android:name=".ui.job.job_detail.JobDetailActivity" />
         <activity
             android:name=".ui.user.user_detail.UserDetailActivity"
-            android:label="@string/title_activity_user_detail"></activity>
+            android:label="@string/title_activity_user_detail" />
+        <activity
+            android:name=".ui.user.add_user.AddUserActivity"
+            android:label="@string/title_activity_add_user"></activity>
     </application>
 
 </manifest>
