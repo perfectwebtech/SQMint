@@ -9,13 +9,12 @@ public class Job {
     private String jobName;
     private String lastRunDate;
     private String lastRunTime;
+    private String lastRun;
+    private String status;
 
-    public Job(int id, String jobName, String lastRunDate, String lastRunTime)
+    public Job()
     {
-        this.id = id;
-        this.jobName = jobName;
-        this.lastRunDate = lastRunDate;
-        this.lastRunTime = lastRunTime;
+
     }
 
     public int getId() {
@@ -48,5 +47,23 @@ public class Job {
 
     public void setLastRunTime(String lastRunTime) {
         this.lastRunTime = lastRunTime;
+    }
+
+    public String getLastRun() {
+        return lastRun;
+    }
+
+    public void setLastRun(String lastRun) {
+        String[] splitted = lastRun.split("\\s+");
+        setLastRunDate(splitted[0]);
+        setLastRunTime(splitted[1]);
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

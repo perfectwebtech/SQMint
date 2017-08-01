@@ -12,9 +12,10 @@ public class JobPresenter implements JobPresenterIntf{
         this.mJobView = jobView;
     }
 
-
     @Override
     public void getJobDetail(int id) {
         this.mJobView.openJobDetail(id);
     }
+
+
 }

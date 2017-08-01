@@ -52,6 +52,13 @@ public class JobListAdapter extends BaseAdapter {
         tvLastRunDate.setText(this.mJobList.get(position).getLastRunDate());
         tvLastRunTime.setText(this.mJobList.get(position).getLastRunTime());
 
+        if(this.mJobList.get(position).getStatus().equals("Succeeded")) {
+            ivJobStatus.setImageResource(R.drawable.list_success);
+        }
+        else{
+            ivJobStatus.setImageResource(R.drawable.list_error);
+        }
+
         v.setTag(mJobList.get(position).getId());
 
         return v;
