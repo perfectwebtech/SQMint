@@ -6,6 +6,7 @@ package com.example.shalhan4.sqmint.ui.job;
 
 public class Job {
     private int id;
+    private String jobId;
     private String jobName;
     private String lastRunDate;
     private String lastRunTime;
@@ -23,6 +24,14 @@ public class Job {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(String jobId) {
+        this.jobId = jobId;
     }
 
     public String getJobName() {

@@ -1,6 +1,7 @@
 package com.example.shalhan4.sqmint.ui.job;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,7 +32,6 @@ import java.util.List;
 public class JobFragment extends Fragment implements JobView {
     private ListView mListView;
     private JobListAdapter mJobAdapter;
-    private List<Job> mJobList;
     private JobPresenter mJobPresenter;
 
     public JobFragment() {
@@ -46,15 +46,15 @@ public class JobFragment extends Fragment implements JobView {
 
         this.mListView = (ListView) v.findViewById(R.id.job_list);
 
-        new SQMintApi().execute("http://192.168.0.103:50447/API/jobs");
-
-
-
         this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                mJobPresenter.getJobDetail(position);
+                Job mJobList = (Job) mJobAdapter.getItem(position);
+                Log.i("JOB LIST BY ID ====> ", mJobList.getId() + "");
+
+
+                mJobPresenter.getJobDetail(mJobList.getId());
             }
         });
 
@@ -66,59 +66,15 @@ public class JobFragment extends Fragment implements JobView {
     public void openJobDetail(int id)
     {
         Intent intent = new Intent(getActivity(), JobDetailActivity.class);
+        intent.putExtra("JOB_ID", id);
         startActivity(intent);
     }
 
-    public class SQMintApi extends AsyncTask<String, String, List<Job> > {
-
-        protected List<Job> doInBackground(String... params) {
-            try {
-                URL url = new URL(params[0]);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                try {
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(line).append("\n");
-                    }
-                    bufferedReader.close();
-                    String result = stringBuilder.toString();
-                    List<Job> jobList = new ArrayList<>();
-                    JSONArray jobArray = new JSONArray(result);
-                    int length = jobArray.length();
-                    for(int i = 0; i < length; i++)
-                    {
-                        JSONObject jobObject = jobArray.getJSONObject(i);
-                        Job jobs = new Job();
-                        jobs.setId(jobObject.getInt("id"));
-                        jobs.setJobName(jobObject.getString("name"));
-                        jobs.setLastRun(jobObject.getString("lastRun"));
-                        jobs.setStatus(jobObject.getString("lastRunOutcome"));
-                        jobList.add(jobs);
-                    }
-
-
-                    return jobList;
-
-                }
-                finally{
-                    urlConnection.disconnect();
-                }
-            }
-            catch(Exception e) {
-                Log.e("ERROR", e.getMessage(), e);
-                return null;
-            }
-        }
-
-        protected void onPostExecute(List<Job> response) {
-            super.onPostExecute(response);
-
-            mJobList = response;
-            mJobAdapter = new JobListAdapter(getActivity(), mJobList);
-            mListView.setAdapter(mJobAdapter);
-
-        }
+    @Override
+    public void setJobListAdapter(List<Job> mJobList)
+    {
+        this.mJobAdapter = new JobListAdapter(getActivity(), mJobList);
+        this.mListView.setAdapter(mJobAdapter);
     }
+
 }

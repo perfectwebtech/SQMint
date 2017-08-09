@@ -43,16 +43,21 @@ public class JobDetailListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = View.inflate(this.mContext, R.layout.job_detail_list, null);
 
-        TextView tvJobId = (TextView) v.findViewById(R.id.tv_user_id);
         TextView tvRunDate = (TextView) v.findViewById(R.id.tv_login_date);
         TextView tvRunTime = (TextView) v.findViewById(R.id.tv_login_time);
         TextView tvDuration = (TextView) v.findViewById(R.id.tv_duration);
         ImageView ivJobStatus = (ImageView) v.findViewById(R.id.iv_job_detail_status);
 
-        tvJobId.setText("" + this.mJobDetailList.get(position).getJobId());
         tvRunDate.setText(this.mJobDetailList.get(position).getRunDate());
         tvRunTime.setText(this.mJobDetailList.get(position).getRunTime());
         tvDuration.setText(this.mJobDetailList.get(position).getDuration());
+
+        if(this.mJobDetailList.get(position).getStatus().equals("Succeeded")) {
+            ivJobStatus.setImageResource(R.drawable.list_success);
+        }
+        else{
+            ivJobStatus.setImageResource(R.drawable.list_error);
+        }
 
         v.setTag(mJobDetailList.get(position).getId());
 

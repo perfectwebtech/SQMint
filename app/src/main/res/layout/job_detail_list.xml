@@ -13,27 +13,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/list_success"
-        android:layout_below="@+id/tv_job_name"
+        android:layout_alignTop="@+id/textView4"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_above="@+id/textView5" />
 
     <TextView
-        android:id="@+id/tv_job_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ID :"
-        android:textSize="@dimen/meta_text" />
-
-    <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tv_job_name"
         android:text="Run Date :"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/textView5"
@@ -45,28 +38,18 @@
         android:text="Run Time :"
         android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/tv_user_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="78dp"
-        android:layout_marginStart="78dp"
-        android:text="20113324"
-        android:textColor="@color/colorText" />
 
     <TextView
         android:id="@+id/tv_login_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView4"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_alignLeft="@+id/tv_user_id"
-        android:layout_alignStart="@+id/tv_user_id"
         android:text="20/03/2017"
-        android:textColor="@color/colorText" />
+        android:textColor="@color/colorText"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView9"
+        android:layout_toEndOf="@+id/textView9"
+        android:layout_marginLeft="36dp"
+        android:layout_marginStart="36dp" />
 
     <TextView
         android:id="@+id/tv_login_time"

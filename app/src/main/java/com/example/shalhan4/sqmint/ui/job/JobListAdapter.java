@@ -43,11 +43,13 @@ public class JobListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = View.inflate(this.mContext, R.layout.job_list, null);
 
+        TextView tvJobID = (TextView) v.findViewById(R.id.tv_job_id);
         TextView tvJobName = (TextView) v.findViewById(R.id.tv_job_name);
         TextView tvLastRunDate = (TextView) v.findViewById(R.id.tv_last_run_date);
         TextView tvLastRunTime = (TextView) v.findViewById(R.id.tv_last_run_time);
         ImageView ivJobStatus = (ImageView) v.findViewById(R.id.iv_job_status);
 
+        tvJobID.setText(this.mJobList.get(position).getJobId());
         tvJobName.setText(this.mJobList.get(position).getJobName());
         tvLastRunDate.setText(this.mJobList.get(position).getLastRunDate());
         tvLastRunTime.setText(this.mJobList.get(position).getLastRunTime());

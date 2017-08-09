@@ -1,21 +1,28 @@
 package com.example.shalhan4.sqmint.ui.job.job_detail;
 
+import com.example.shalhan4.sqmint.ui.job.Job;
+
+import java.util.List;
+
 /**
  * Created by shalhan4 on 6/9/2017.
  */
 
-public class JobDetail {
+public class JobDetail{
     private int id;
     private String jobName;
-    private int jobId;
     private String runTime;
     private String runDate;
     private String duration;
+    private String status;
+    private List<Job> mJobList;
 
-    public JobDetail(int id, String jobName, int jobId, String runDate, String runTime, String duration) {
+    public JobDetail(){
+
+    }
+
+    public JobDetail(int id, String runDate, String runTime, String duration) {
         this.id = id;
-        this.jobName = jobName;
-        this.jobId = jobId;
         this.runTime = runTime;
         this.runDate = runDate;
         this.duration = duration;
@@ -29,20 +36,13 @@ public class JobDetail {
         this.id = id;
     }
 
+
     public String getJobName() {
         return jobName;
     }
 
     public void setJobName(String jobName) {
         this.jobName = jobName;
-    }
-
-    public int getJobId() {
-        return jobId;
-    }
-
-    public void setJobId(int jobId) {
-        this.jobId = jobId;
     }
 
     public String getRunTime() {
@@ -67,5 +67,27 @@ public class JobDetail {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public void setRunDateTime(String lastRun) {
+        String[] splitted = lastRun.split("\\s+");
+        setRunDate(splitted[0]);
+        setRunTime(splitted[1]);
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<Job> getJobList() {
+        return mJobList;
+    }
+
+    public void setJobList(List<Job> mJobList) {
+        this.mJobList = mJobList;
     }
 }
