@@ -88,7 +88,7 @@ public class UsagePresenter {
 
         protected void onPostExecute(List<Usage> response) {
             super.onPostExecute(response);
-            mUsageView.setMemoryUsage(response);
+            mUsageView.setResources(response);
         }
     }
 

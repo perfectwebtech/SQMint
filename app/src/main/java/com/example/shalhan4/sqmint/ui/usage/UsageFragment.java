@@ -4,7 +4,6 @@ package com.example.shalhan4.sqmint.ui.usage;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +19,17 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class UsageFragment extends Fragment implements UsageView{
 
-    private LineChart mChart;
+    private LineChart memoryUsageChart, cpuUsageChart;
     private List<Usage> mUsage;
     private UsagePresenter mUsagePresenter;
+
 
     public UsageFragment() {
         // Required empty public constructor
@@ -46,52 +44,10 @@ public class UsageFragment extends Fragment implements UsageView{
         this.mUsagePresenter = new UsagePresenter(this);
 
 
-        mChart = (LineChart) v.findViewById(R.id.cpu_chart);
-
-        // enable description text
-        mChart.getDescription().setEnabled(true);
-
-        // enable touch gestures
-        mChart.setTouchEnabled(true);
-
-        // enable scaling and dragging
-        mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(true);
-        mChart.setDrawGridBackground(false);
-
-        // if disabled, scaling can be done on x- and y-axis separately
-        mChart.setPinchZoom(true);
-
-        // set an alternative background color
-        mChart.setBackgroundColor(Color.LTGRAY);
-
-        LineData data = new LineData();
-        data.setValueTextColor(Color.WHITE);
-
-        // add empty data
-        mChart.setData(data);
-
-        // get the legend (only possible after setting data)
-        Legend l = mChart.getLegend();
-
-        // modify the legend ...
-        l.setForm(Legend.LegendForm.LINE);
-        l.setTextColor(Color.WHITE);
-
-        XAxis xl = mChart.getXAxis();
-        xl.setTextColor(Color.WHITE);
-        xl.setDrawGridLines(false);
-        xl.setAvoidFirstLastClipping(true);
-        xl.setEnabled(true);
-
-        YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.setTextColor(Color.WHITE);
-        leftAxis.setAxisMaximum(4000f);
-        leftAxis.setAxisMinimum(1000f);
-        leftAxis.setDrawGridLines(true);
-
-        YAxis rightAxis = mChart.getAxisRight();
-        rightAxis.setEnabled(false);
+        memoryUsageChart = (LineChart) v.findViewById(R.id.memory_chart);
+        cpuUsageChart = (LineChart) v.findViewById(R.id.cpu_chart);
+        setMemoryUsageChart();
+        setCpuUsageChart();
 
 
         feedMultiple();
@@ -99,9 +55,10 @@ public class UsageFragment extends Fragment implements UsageView{
         return v;
     }
 
-    private void addEntry() {
+    @Override
+    public void addEntryMemoryUsage() {
 
-        LineData data = mChart.getData();
+        LineData data = memoryUsageChart.getData();
 
         if (data != null) {
 
@@ -117,26 +74,61 @@ public class UsageFragment extends Fragment implements UsageView{
             data.notifyDataChanged();
 
             // let the chart know it's data has changed
-            mChart.notifyDataSetChanged();
+            memoryUsageChart.notifyDataSetChanged();
 
             // limit the number of visible entries
-            mChart.setVisibleXRangeMaximum(120);
-            // mChart.setVisibleYRange(30, AxisDependency.LEFT);
+            memoryUsageChart.setVisibleXRangeMaximum(120);
+            // memoryUsageChart.setVisibleYRange(30, AxisDependency.LEFT);
 
             // move to the latest entry
-            mChart.moveViewToX(data.getEntryCount());
+            memoryUsageChart.moveViewToX(data.getEntryCount());
 
             // this automatically refreshes the chart (calls invalidate())
-            // mChart.moveViewTo(data.getXValCount()-7, 55f,
+            // memoryUsageChart.moveViewTo(data.getXValCount()-7, 55f,
             // AxisDependency.LEFT);
         }
     }
 
+    public void addEntryCpuUsage() {
+
+        LineData data = cpuUsageChart.getData();
+
+        if (data != null) {
+
+            ILineDataSet set = data.getDataSetByIndex(0);
+            // set.addEntry(...); // can be called as well
+
+            if (set == null) {
+                set = createSet();
+                data.addDataSet(set);
+            }
+
+            data.addEntry(new Entry(set.getEntryCount(), (float) this.mUsage.get(0).getProcessorUsage()), 0);
+            data.notifyDataChanged();
+
+            // let the chart know it's data has changed
+            cpuUsageChart.notifyDataSetChanged();
+
+            // limit the number of visible entries
+            cpuUsageChart.setVisibleXRangeMaximum(120);
+            // memoryUsageChart.setVisibleYRange(30, AxisDependency.LEFT);
+
+            // move to the latest entry
+            cpuUsageChart.moveViewToX(data.getEntryCount());
+
+            // this automatically refreshes the chart (calls invalidate())
+            // memoryUsageChart.moveViewTo(data.getXValCount()-7, 55f,
+            // AxisDependency.LEFT);
+        }
+    }
+
+
     @Override
-    public void setMemoryUsage(List<Usage> value)
+    public void setResources(List<Usage> value)
     {
         this.mUsage =  value;
-        addEntry();
+        addEntryMemoryUsage();
+        addEntryCpuUsage();
     }
 
     private LineDataSet createSet() {
@@ -194,6 +186,100 @@ public class UsageFragment extends Fragment implements UsageView{
         thread.start();
     }
 
+    @Override
+    public void setMemoryUsageChart() {
+        // enable description text
+        memoryUsageChart.getDescription().setEnabled(true);
 
+        // enable touch gestures
+        memoryUsageChart.setTouchEnabled(true);
 
+        // enable scaling and dragging
+        memoryUsageChart.setDragEnabled(true);
+        memoryUsageChart.setScaleEnabled(true);
+        memoryUsageChart.setDrawGridBackground(false);
+
+        // if disabled, scaling can be done on x- and y-axis separately
+        memoryUsageChart.setPinchZoom(true);
+
+        // set an alternative background color
+        memoryUsageChart.setBackgroundColor(Color.LTGRAY);
+
+        LineData data = new LineData();
+        data.setValueTextColor(Color.WHITE);
+
+        // add empty data
+        memoryUsageChart.setData(data);
+
+        // get the legend (only possible after setting data)
+        Legend l = memoryUsageChart.getLegend();
+
+        // modify the legend ...
+        l.setForm(Legend.LegendForm.LINE);
+        l.setTextColor(Color.WHITE);
+
+        XAxis xl = memoryUsageChart.getXAxis();
+        xl.setTextColor(Color.WHITE);
+        xl.setDrawGridLines(false);
+        xl.setAvoidFirstLastClipping(true);
+        xl.setEnabled(true);
+
+        YAxis leftAxis = memoryUsageChart.getAxisLeft();
+        leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setAxisMaximum(4000f);
+        leftAxis.setAxisMinimum(1000f);
+        leftAxis.setDrawGridLines(true);
+
+        YAxis rightAxis = memoryUsageChart.getAxisRight();
+        rightAxis.setEnabled(false);
+
+    }
+
+    @Override
+    public void setCpuUsageChart() {
+        // enable description text
+        cpuUsageChart.getDescription().setEnabled(true);
+
+        // enable touch gestures
+        cpuUsageChart.setTouchEnabled(true);
+
+        // enable scaling and dragging
+        cpuUsageChart.setDragEnabled(true);
+        cpuUsageChart.setScaleEnabled(true);
+        cpuUsageChart.setDrawGridBackground(false);
+
+        // if disabled, scaling can be done on x- and y-axis separately
+        cpuUsageChart.setPinchZoom(true);
+
+        // set an alternative background color
+        cpuUsageChart.setBackgroundColor(Color.LTGRAY);
+
+        LineData data = new LineData();
+        data.setValueTextColor(Color.WHITE);
+
+        // add empty data
+        cpuUsageChart.setData(data);
+
+        // get the legend (only possible after setting data)
+        Legend l = cpuUsageChart.getLegend();
+
+        // modify the legend ...
+        l.setForm(Legend.LegendForm.LINE);
+        l.setTextColor(Color.WHITE);
+
+        XAxis xl = cpuUsageChart.getXAxis();
+        xl.setTextColor(Color.WHITE);
+        xl.setDrawGridLines(false);
+        xl.setAvoidFirstLastClipping(true);
+        xl.setEnabled(true);
+
+        YAxis leftAxis = cpuUsageChart.getAxisLeft();
+        leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setAxisMaximum(4000f);
+        leftAxis.setAxisMinimum(1000f);
+        leftAxis.setDrawGridLines(true);
+
+        YAxis rightAxis = cpuUsageChart.getAxisRight();
+        rightAxis.setEnabled(false);
+    }
 }

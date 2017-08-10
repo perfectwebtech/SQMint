@@ -8,5 +8,9 @@ import java.util.List;
 
 public interface UsageView {
 
-    public void setMemoryUsage(List<Usage> value);
+    public void setResources(List<Usage> value);
+    public void setMemoryUsageChart();
+    public void setCpuUsageChart();
+    public void addEntryMemoryUsage();
+    public void addEntryCpuUsage();
 }
