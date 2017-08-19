@@ -3,6 +3,7 @@ package com.example.shalhan4.sqmint.ui.usage;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,13 +30,11 @@ public class UsageFragment extends Fragment implements UsageView{
     private LineChart memoryUsageChart, cpuUsageChart;
     private List<Usage> mUsage;
     private UsagePresenter mUsagePresenter;
-
+    private Handler mHandler = new Handler();
 
     public UsageFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +42,7 @@ public class UsageFragment extends Fragment implements UsageView{
         View v = inflater.inflate(R.layout.fragment_usage, container, false);
         this.mUsagePresenter = new UsagePresenter(this);
 
+        this.mUsagePresenter.setUsageContext(getActivity());
 
         memoryUsageChart = (LineChart) v.findViewById(R.id.memory_chart);
         cpuUsageChart = (LineChart) v.findViewById(R.id.cpu_chart);
@@ -53,6 +53,18 @@ public class UsageFragment extends Fragment implements UsageView{
         feedMultiple();
 
         return v;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        thread.interrupt();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        thread.interrupt();
     }
 
     @Override
@@ -122,7 +134,6 @@ public class UsageFragment extends Fragment implements UsageView{
         }
     }
 
-
     @Override
     public void setResources(List<Usage> value)
     {
@@ -155,36 +166,35 @@ public class UsageFragment extends Fragment implements UsageView{
         if (thread != null)
             thread.interrupt();
 
-        final Runnable runnable = new Runnable() {
-
-            @Override
-            public void run() {
-                mUsagePresenter.getUsage();
-//                addEntry();
-            }
-        };
 
         thread = new Thread(new Runnable() {
-
-            @Override
+            int i = 0;
             public void run() {
-                for (int i = 0; i < 1000; i++) {
+                while ( i < 100) {
+                    i += 1;
 
-                    // Don't generate garbage runnables inside the loop.
-                    getActivity().runOnUiThread(runnable);
+                    // Update the progress bar
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            mUsagePresenter.getUsage();
+                        }
+                    });
 
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
+
+                    try{
+                        Thread.sleep(3000);
+                    }
+                    catch(InterruptedException e)
+                    {
                         e.printStackTrace();
                     }
                 }
             }
         });
-
         thread.start();
     }
+
+
 
     @Override
     public void setMemoryUsageChart() {
@@ -225,10 +235,12 @@ public class UsageFragment extends Fragment implements UsageView{
         xl.setEnabled(true);
 
         YAxis leftAxis = memoryUsageChart.getAxisLeft();
+        leftAxis.setLabelCount(6);
         leftAxis.setTextColor(Color.WHITE);
-        leftAxis.setAxisMaximum(4000f);
-        leftAxis.setAxisMinimum(1000f);
-        leftAxis.setDrawGridLines(true);
+        leftAxis.setDrawGridLines(false);
+        xl.setAvoidFirstLastClipping(true);
+        leftAxis.setEnabled(true);
+
 
         YAxis rightAxis = memoryUsageChart.getAxisRight();
         rightAxis.setEnabled(false);
@@ -275,8 +287,8 @@ public class UsageFragment extends Fragment implements UsageView{
 
         YAxis leftAxis = cpuUsageChart.getAxisLeft();
         leftAxis.setTextColor(Color.WHITE);
-        leftAxis.setAxisMaximum(4000f);
-        leftAxis.setAxisMinimum(1000f);
+        leftAxis.setAxisMaximum(100f);
+        leftAxis.setAxisMinimum(0f);
         leftAxis.setDrawGridLines(true);
 
         YAxis rightAxis = cpuUsageChart.getAxisRight();

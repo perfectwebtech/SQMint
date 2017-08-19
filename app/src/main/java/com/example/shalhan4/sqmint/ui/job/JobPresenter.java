@@ -1,6 +1,10 @@
 package com.example.shalhan4.sqmint.ui.job;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -19,12 +23,49 @@ import java.util.List;
 
 public class JobPresenter implements JobPresenterIntf{
     private JobView mJobView;
+    SharedPreferences sharedPreferences;
+    private Context context;
+    //SharedPreferences
+    SharedPreferences settings;
+    public static final String PREFERENCES_NAME = "SQMINT";
+    public static final String USERNAME = "USERNAME";
+    public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
+    public static final String TOKEN_TYPE = "TOKEN_TYPE";
+    public static final String EXPIRES_IN = "EXPIRES_IN";
+
+
 
     public JobPresenter(JobView jobView)
     {
         this.mJobView = jobView;
-        new SQMintApi().execute("http://192.168.0.103:50447/API/jobs");
+//        new SQMintApi().execute("http://192.168.0.103:50447/API/jobs"); //kosan
+//        new SQMintApi().execute("http://192.168.0.3:50447/API/jobs"); //kosan
     }
+
+    @Override
+    public void startApi()
+    {
+//        new SQMintApi().execute("http://192.168.0.10:53293/API/job"); //laptop dikna koneksi kelly
+//        new SQMintApi().execute("http://192.168.43.118:53293/API/job"); //laptop aten koneksi shalhan
+//        new SQMintApi().execute("http://192.168.43.215:53293/API/job"); //laptop aten koneksi dikna
+        new SQMintApi().execute("http://192.168.0.12:53293/API/job"); //laptop aten koneksi dikna
+    }
+
+    @Override
+    public String getAccessToken()
+    {
+        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+        return this.sharedPreferences.getString(TOKEN_TYPE, null) + " " + this.sharedPreferences.getString(ACCESS_TOKEN, null);
+//        Log.i("TOKEN TYPE", this.sharedPreferences.getString(ACCESS_TOKEN, null));
+
+    }
+
+    @Override
+    public void setJobContext(Context context)
+    {
+        this.context = context;
+    }
+
 
     @Override
     public void getJobDetail(int id) {
@@ -37,6 +78,7 @@ public class JobPresenter implements JobPresenterIntf{
             try {
                 URL url = new URL(params[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestProperty("Authorization", getAccessToken());
                 try {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                     StringBuilder stringBuilder = new StringBuilder();

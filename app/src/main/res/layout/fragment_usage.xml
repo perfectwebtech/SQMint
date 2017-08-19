@@ -45,7 +45,8 @@
                 android:id="@+id/memory_chart"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                android:layout_marginTop="460dp"/>
+                android:layout_marginTop="460dp"
+                android:layout_marginBottom="50dp"/>
         </RelativeLayout>
     </ScrollView>
 </FrameLayout>

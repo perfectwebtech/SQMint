@@ -44,6 +44,9 @@ public class JobFragment extends Fragment implements JobView {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_job, container, false);
 
+        mJobPresenter.setJobContext(getActivity());
+        mJobPresenter.startApi();
+
         this.mListView = (ListView) v.findViewById(R.id.job_list);
 
         this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){

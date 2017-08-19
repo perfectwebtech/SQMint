@@ -11,4 +11,11 @@ public interface ILoginActivity {
 
     void fieldIsNull(int fieldUsername, int fieldPassword);
 
+    void runProgressBar();
+
+    void stopProgressBar();
+
+    void disableComponent();
+
+    void enalbeComponent();
 }

@@ -58,22 +58,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
 
     @Override
     public void loginIsValid() {
-        this.mProgress.setVisibility(View.VISIBLE);
-        // Start lengthy operation in a background thread
-        new Thread(new Runnable() {
-            public void run() {
-                while ( mProgressStatus < 100) {
-                    mProgressStatus += 1;
-
-                    // Update the progress bar
-                    mHandler.post(new Runnable() {
-                        public void run() {
-                            mProgress.setProgress(mProgressStatus);
-                        }
-                    });
-                }
-            }
-        }).start();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -96,5 +80,53 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
             this.etUsername.getBackground().mutate().setColorFilter(getResources().getColor(R.color.fieldOnError), PorterDuff.Mode.SRC_ATOP);
         if(fieldPassword == 0)
             this.etPassword.getBackground().mutate().setColorFilter(getResources().getColor(R.color.fieldOnError), PorterDuff.Mode.SRC_ATOP);
+    }
+
+    private Thread thread;
+
+    @Override
+    public void runProgressBar()
+    {
+        this.mProgress.setVisibility(View.VISIBLE);
+        // Start lengthy operation in a background thread
+        thread = new Thread(new Runnable() {
+            public void run() {
+                while ( mProgressStatus < 100) {
+                    mProgressStatus += 1;
+
+                    // Update the progress bar
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            mProgress.setProgress(mProgressStatus);
+                        }
+                    });
+                }
+            }
+        });
+
+        thread.start();
+
+    }
+
+    @Override
+    public void stopProgressBar()
+    {
+        this.mProgress.setVisibility(View.INVISIBLE);
+        thread.interrupt();
+    }
+    @Override
+    public void disableComponent()
+    {
+        this.etUsername.setFocusable(false);
+        this.etPassword.setFocusable(false);
+        this.bLogin.setFocusable(false);
+    }
+
+    @Override
+    public void enalbeComponent()
+    {
+        this.etUsername.setEnabled(true);
+        this.etPassword.setEnabled(true);
+        this.bLogin.setEnabled(true);
     }
 }

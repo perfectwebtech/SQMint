@@ -1,6 +1,9 @@
 package com.example.shalhan4.sqmint.ui.job.job_detail;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.example.shalhan4.sqmint.ui.job.Job;
@@ -21,11 +24,41 @@ import java.util.List;
 
 public class JobDetailPresenter {
     private JobDetailView mJobDetailView;
+    private int jobId;
+    private Context context;
+
+    SharedPreferences sharedPreferences;
+
+    public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
+    public static final String TOKEN_TYPE = "TOKEN_TYPE";
+    public static final String EXPIRES_IN = "EXPIRES_IN";
 
     public JobDetailPresenter(JobDetailView mJobDetail, int jobId)
     {
         mJobDetailView = mJobDetail;
-        new SQMintApi().execute("http://192.168.0.103:50447/API/jobs/" + jobId);
+        this.jobId = jobId;
+//        new SQMintApi().execute("http://192.168.0.103:50447/API/jobs/" + jobId); //kosan
+    }
+
+    public void startApi()
+    {
+//        new SQMintApi().execute("http://192.168.0.10:53293/API/job/" + this.jobId); //laptop dikna koneksi kelly
+//        new SQMintApi().execute("http://192.168.43.118:53293/API/job/" + this.jobId); //laptop aten koneksi shalhan
+//        new SQMintApi().execute("http://192.168.43.215:53293/API/job/" + this.jobId); //laptop aten koneksi dikna
+        new SQMintApi().execute("http://192.168.0.12:53293/API/job/" + this.jobId); //laptop aten koneksi dikna
+
+    }
+
+    public void setJobDetailContext(Context context)
+    {
+        this.context = context;
+    }
+
+    public String getAccessToken()
+    {
+        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+        return this.sharedPreferences.getString(TOKEN_TYPE, null) + " " + this.sharedPreferences.getString(ACCESS_TOKEN, null);
+
     }
 
     public class SQMintApi extends AsyncTask<String, String, List<JobDetail> > {
@@ -34,6 +67,7 @@ public class JobDetailPresenter {
             try {
                 URL url = new URL(params[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestProperty("Authorization", getAccessToken());
                 try {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                     StringBuilder stringBuilder = new StringBuilder();
@@ -88,7 +122,10 @@ public class JobDetailPresenter {
 
         protected void onPostExecute(List<JobDetail> response) {
             super.onPostExecute(response);
-            mJobDetailView.setJobDetailListAdapter(response);
+            if(!response.isEmpty())
+                mJobDetailView.setJobDetailListAdapter(response);
+            else
+                mJobDetailView.jobDetailListEmpty();
         }
     }
 

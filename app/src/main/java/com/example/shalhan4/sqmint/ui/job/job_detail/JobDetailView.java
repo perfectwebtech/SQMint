@@ -10,5 +10,6 @@ public interface JobDetailView {
     public void setUp();
 
     public void setJobDetailListAdapter(List<JobDetail> mJobDetailList);
+    public void jobDetailListEmpty();
 
 }

@@ -1,6 +1,9 @@
 package com.example.shalhan4.sqmint.ui.usage;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.example.shalhan4.sqmint.ui.job.Job;
@@ -22,6 +25,11 @@ import java.util.List;
 
 public class UsagePresenter {
     private UsageView mUsageView;
+    private Context context;
+
+    SharedPreferences sharedPreferences;
+    public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
+    public static final String TOKEN_TYPE = "TOKEN_TYPE";
 
     public UsagePresenter(UsageView usageView)
     {
@@ -30,8 +38,26 @@ public class UsagePresenter {
 
     public void getUsage()
     {
-        new SQMintApi().execute("http://192.168.0.103:50447/API/resources");
+//        new SQMintApi().execute("http://192.168.0.103:50447/API/resources");
+//
+//        new SQMintApi().execute("http://192.168.0.10:53293/API/resource"); //laptop dikna koneksi kelly
+//        new SQMintApi().execute("http://192.168.43.118:53293/API/resource"); //laptop aten koneksi shalhan
+//        new SQMintApi().execute("http://192.168.43.215:53293/API/resource"); //laptop aten koneksi dikna
+        new SQMintApi().execute("http://192.168.0.12:53293/API/resource"); //laptop aten koneksi dikna
 
+
+
+    }
+
+    public void setUsageContext(Context context)
+    {
+        this.context = context;
+    }
+
+    public String getAccessToken()
+    {
+        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+        return this.sharedPreferences.getString(TOKEN_TYPE, null) + " " + this.sharedPreferences.getString(ACCESS_TOKEN, null);
     }
 
     public class SQMintApi extends AsyncTask<String, String, List<Usage> > {
@@ -40,6 +66,7 @@ public class UsagePresenter {
             try {
                 URL url = new URL(params[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestProperty("Authorization", getAccessToken());
                 try {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                     StringBuilder stringBuilder = new StringBuilder();
@@ -58,20 +85,6 @@ public class UsagePresenter {
                     usages.setAvailableMemory(usageObject.getDouble("availableMemory"));
                     usages.setProcessorUsage(usageObject.getDouble("processorUsage"));
                     usageList.add(usages);
-//                    JSONArray usageArray = new JSONArray(result);
-//                    int length = usageArray.length();
-//                    Log.i("RESULT ===> ", usageArray.length() + "  " );
-//                    for(int i = 0; i < length; i++)
-//                    {
-//                        JSONObject usageObject = usageArray.getJSONObject(i);
-//                        Usage usages = new Usage();
-//                        usages.setId(usageObject.getInt("id"));
-//                        usages.setAvailableMemory(usageObject.getDouble("availableMemory"));
-//                        usages.setProcessorUsage(usageObject.getDouble("processorUsage"));
-//                        usageList.add(usages);
-//                    }
-
-
 
                     return usageList;
 
@@ -88,6 +101,7 @@ public class UsagePresenter {
 
         protected void onPostExecute(List<Usage> response) {
             super.onPostExecute(response);
+            Log.i("USAGE REPORT", response.toString());
             mUsageView.setResources(response);
         }
     }

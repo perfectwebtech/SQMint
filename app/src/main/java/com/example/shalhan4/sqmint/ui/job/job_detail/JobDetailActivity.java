@@ -50,6 +50,8 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
 
         this.JOB_ID = getIntent().getIntExtra("JOB_ID", 0);
         this.mJobDetailPresenter = new JobDetailPresenter(this, this.JOB_ID);
+        this.mJobDetailPresenter.setJobDetailContext(this);
+        this.mJobDetailPresenter.startApi();
     }
 
     @Override
@@ -86,5 +88,10 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
         this.jobDetailName.setText(mJobDetailList.get(0).getJobName());
         this.mJobDetailListAdapter = new JobDetailListAdapter(JobDetailActivity.this, mJobDetailList);
         this.mListView.setAdapter(this.mJobDetailListAdapter);
+    }
+
+    @Override
+    public void jobDetailListEmpty(){
+        this.jobDetailName.setText("History still empty");
     }
 }
