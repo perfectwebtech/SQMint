@@ -230,7 +230,7 @@ public class UsageFragment extends Fragment implements UsageView{
 
         XAxis xl = memoryUsageChart.getXAxis();
         xl.setTextColor(Color.WHITE);
-        xl.setDrawGridLines(false);
+        xl.setDrawGridLines(true);
         xl.setAvoidFirstLastClipping(true);
         xl.setEnabled(true);
 

@@ -38,6 +38,7 @@ public class LoginPresenter implements ILoginPresenter {
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static final String TOKEN_TYPE = "TOKEN_TYPE";
     public static final String EXPIRES_IN = "EXPIRES_IN";
+    public static final String IS_USER_LOGGEDIN = "IS_USER_LOGGEDIN";
 
     SharedPreferences sharedPreferences;
 
@@ -151,6 +152,8 @@ public class LoginPresenter implements ILoginPresenter {
                     editor.putString(ACCESS_TOKEN, userObj.getString("access_token"));
                     editor.putString(TOKEN_TYPE, userObj.getString("token_type"));
                     editor.putString(EXPIRES_IN, userObj.getString("expires_in"));
+                    editor.putBoolean(IS_USER_LOGGEDIN, true);
+
                     editor.commit();
 //                    //login
                     Log.i("USERNAME", sharedPreferences.getString(USERNAME, null));

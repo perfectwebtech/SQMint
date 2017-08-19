@@ -3,10 +3,13 @@ package com.example.shalhan4.sqmint.ui.main;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +22,7 @@ import android.view.MenuItem;
 
 import com.example.shalhan4.sqmint.R;
 import com.example.shalhan4.sqmint.ui.job.JobFragment;
+import com.example.shalhan4.sqmint.ui.login.LoginActivity;
 import com.example.shalhan4.sqmint.ui.usage.UsageFragment;
 import com.example.shalhan4.sqmint.ui.user.UserFragment;
 
@@ -29,11 +33,20 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private MainPresenter mMainPresenter;
+    SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if(!this.sharedPreferences.getBoolean("IS_USER_LOGGEDIN", false))
+        {
+            Intent intent = new Intent(this , LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
 
         //Inisiasi MainPresenter
         this.mMainPresenter = new MainPresenter(this);
@@ -42,6 +55,17 @@ public class MainActivity extends AppCompatActivity
         //Default Fragment = Jobs
         onNavigationItemSelected(this.navigationView.getMenu().getItem(0).setChecked(true));
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(!this.sharedPreferences.getBoolean("IS_USER_LOGGEDIN", false))
+        {
+            Intent intent = new Intent(this , LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -69,7 +93,12 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Log.i("USRNAME SBLM LOGOUT",this.sharedPreferences.getString("USERNAME", null));
+            this.sharedPreferences.edit().clear().commit();
+
+            Intent intent = new Intent(this , LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
