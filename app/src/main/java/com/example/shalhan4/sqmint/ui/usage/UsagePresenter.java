@@ -43,7 +43,8 @@ public class UsagePresenter {
 //        new SQMintApi().execute("http://192.168.0.10:53293/API/resource"); //laptop dikna koneksi kelly
 //        new SQMintApi().execute("http://192.168.43.118:53293/API/resource"); //laptop aten koneksi shalhan
 //        new SQMintApi().execute("http://192.168.43.215:53293/API/resource"); //laptop aten koneksi dikna
-        new SQMintApi().execute("http://192.168.0.12:53293/API/resource"); //laptop aten koneksi dikna
+//        new SQMintApi().execute("http://192.168.0.12:53293/API/resource"); //laptop aten koneksi dikna
+        new SQMintApi().execute("http://192.168.0.27:53293/api/resource"); //laptop shalhan koneksi kosan
 
 
 
@@ -101,7 +102,6 @@ public class UsagePresenter {
 
         protected void onPostExecute(List<Usage> response) {
             super.onPostExecute(response);
-            Log.i("USAGE REPORT", response.toString());
             mUsageView.setResources(response);
         }
     }

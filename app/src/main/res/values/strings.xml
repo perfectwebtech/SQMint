@@ -25,6 +25,8 @@
 
     <!-- Add User -->
     <string name="tv_add_user_info">*insert LDAP IPB username</string>
+    <string name="tv_not_valid_admin">Username is not valid</string>
+
     <string name="btn_signup">Sign up</string>
 
 

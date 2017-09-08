@@ -17,5 +17,5 @@ public interface ILoginActivity {
 
     void disableComponent();
 
-    void enalbeComponent();
+    void enableComponent();
 }

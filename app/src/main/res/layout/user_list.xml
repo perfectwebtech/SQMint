@@ -23,7 +23,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/user_name"
-        android:text="ID :" />
+        android:text="NIP :" />
 
     <TextView
         android:id="@+id/textView7"
@@ -44,13 +44,13 @@
         android:text="Last Login Time :" />
 
     <TextView
-        android:id="@+id/user_id"
+        android:id="@+id/user_nip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="64130087"
-        android:layout_below="@+id/user_name"
         android:layout_alignLeft="@+id/user_last_login_date"
-        android:layout_alignStart="@+id/user_last_login_date" />
+        android:layout_alignStart="@+id/user_last_login_date"
+        android:layout_below="@+id/user_name"
+        android:text="64130087" />
 
     <TextView
         android:id="@+id/user_last_login_date"

@@ -39,6 +39,9 @@ public class LoginPresenter implements ILoginPresenter {
     public static final String TOKEN_TYPE = "TOKEN_TYPE";
     public static final String EXPIRES_IN = "EXPIRES_IN";
     public static final String IS_USER_LOGGEDIN = "IS_USER_LOGGEDIN";
+    public static final String NAME = "NAME";
+    public static final String STATUS = "STATUS";
+
 
     SharedPreferences sharedPreferences;
 
@@ -60,10 +63,7 @@ public class LoginPresenter implements ILoginPresenter {
             this.username = username;
             this.password = password;
 
-//            new SQMintApi().execute("http://192.168.0.10:53293/token"); //laptop dikna koneksi kelly
-//            new SQMintApi().execute("http://192.168.43.118:53293/token"); //laptop aten koneksi shalhan
-//            new SQMintApi().execute("http://192.168.43.215:53293/token"); //laptop aten koneksi dikna
-            new SQMintApi().execute("http://192.168.0.12:53293/token"); //laptop aten koneksi kelly
+            new SQMintApi().execute("http://192.168.0.27:53293/token"); //koneksi kosan
 
 
         }
@@ -83,8 +83,8 @@ public class LoginPresenter implements ILoginPresenter {
             try {
                 URL url = new URL(params[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setReadTimeout(15000);
-                urlConnection.setConnectTimeout(15000);
+                urlConnection.setReadTimeout(20000);
+                urlConnection.setConnectTimeout(20000);
                 urlConnection.setRequestMethod("POST");
                 urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 urlConnection.setRequestProperty("charset", "utf-8");
@@ -98,15 +98,22 @@ public class LoginPresenter implements ILoginPresenter {
                                     "&grant_type=" + URLEncoder.encode("password", "UTF-8");
 
                     Log.i("USERNYA INI NIH", userAuth);
+                    Log.i("START OUTPUT STREAM", "HARUSNYA");
 
                     DataOutputStream os = new DataOutputStream(urlConnection.getOutputStream());
                     os.writeBytes(userAuth);
-                    Log.i("RESPONSE MESSAGE", urlConnection.getResponseMessage());
-                    Log.i("RESPONSE CODE", urlConnection.getResponseCode() + "");
+//                    Log.i("HARUSNYA BERHASIL", urlConnection.getResponseMessage());
+                    Log.i("HARUSNYA 200", urlConnection.getResponseCode() + "");
                     os.flush();
                     os.close ();
-
+                    if(urlConnection.getResponseCode() == 400)
+                    {
+                        String response = "";
+                        return response;
+                    }
                     //Get Response
+                    Log.i("END OUTPUT STREAM", "HARUSNYA");
+
 
                     InputStream is = urlConnection.getInputStream();
                     BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -136,7 +143,7 @@ public class LoginPresenter implements ILoginPresenter {
         protected void onPostExecute(String response) {
             super.onPostExecute(response);
             mLoginActivity.stopProgressBar();
-            mLoginActivity.enalbeComponent();
+            mLoginActivity.enableComponent();
             Log.i("HASILNYA NIH", response);
             if(!response.isEmpty()) {
                 Log.i("BERHASIL LOGIN", "YEAY");
@@ -149,6 +156,9 @@ public class LoginPresenter implements ILoginPresenter {
                     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(USERNAME, username);
+                    editor.putString(NAME, userObj.getString("name"));
+                    editor.putString(STATUS, userObj.getString("status"));
+
                     editor.putString(ACCESS_TOKEN, userObj.getString("access_token"));
                     editor.putString(TOKEN_TYPE, userObj.getString("token_type"));
                     editor.putString(EXPIRES_IN, userObj.getString("expires_in"));
@@ -157,6 +167,8 @@ public class LoginPresenter implements ILoginPresenter {
                     editor.commit();
 //                    //login
                     Log.i("USERNAME", sharedPreferences.getString(USERNAME, null));
+                    Log.i("STATUS", sharedPreferences.getString(STATUS, null));
+
                     mLoginActivity.loginIsValid();
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
     }
 
     @Override
-    public void enalbeComponent()
+    public void enableComponent()
     {
         this.etUsername.setEnabled(true);
         this.etPassword.setEnabled(true);

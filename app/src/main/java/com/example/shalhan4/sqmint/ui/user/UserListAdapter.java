@@ -43,12 +43,12 @@ public class UserListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = View.inflate(this.mContext, R.layout.user_list, null);
 
-        TextView tvId = (TextView) v.findViewById(R.id.user_id);
+        TextView tvNip = (TextView) v.findViewById(R.id.user_nip);
         TextView tvUserName = (TextView) v.findViewById(R.id.user_name);
         TextView tvLastLoginDate = (TextView) v.findViewById(R.id.user_last_login_date);
         TextView tvLastLoginTime = (TextView) v.findViewById(R.id.user_last_login_time);
 
-        tvId.setText("" + this.mUserList.get(position).getId());
+        tvNip.setText(this.mUserList.get(position).getNip());
         tvUserName.setText(this.mUserList.get(position).getName());
         tvLastLoginDate.setText(this.mUserList.get(position).getLastLoginDate());
         tvLastLoginTime.setText(this.mUserList.get(position).getLastLoginTime());

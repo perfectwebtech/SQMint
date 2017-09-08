@@ -45,7 +45,8 @@ public class JobDetailPresenter {
 //        new SQMintApi().execute("http://192.168.0.10:53293/API/job/" + this.jobId); //laptop dikna koneksi kelly
 //        new SQMintApi().execute("http://192.168.43.118:53293/API/job/" + this.jobId); //laptop aten koneksi shalhan
 //        new SQMintApi().execute("http://192.168.43.215:53293/API/job/" + this.jobId); //laptop aten koneksi dikna
-        new SQMintApi().execute("http://192.168.0.12:53293/API/job/" + this.jobId); //laptop aten koneksi dikna
+//        new SQMintApi().execute("http://192.168.0.12:53293/API/job/" + this.jobId); //laptop aten koneksi dikna
+        new SQMintApi().execute("http://192.168.0.27:53293/api/job/jobhistory/" + this.jobId); //laptop shalhan koneksi kosan
 
     }
 

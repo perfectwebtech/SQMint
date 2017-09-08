@@ -1,18 +1,25 @@
 package com.example.shalhan4.sqmint.ui.user;
 
+import android.util.Log;
+
 /**
  * Created by shalhan4 on 6/18/2017.
  */
 
 public class User {
     int id;
-    String name, lastLoginDate, lastLoginTime;
+    String name, lastLoginDate, lastLoginTime, nip;
 
     public User(int id, String name, String lastLoginDate, String lastLoginTime) {
         this.id = id;
         this.name = name;
         this.lastLoginDate = lastLoginDate;
         this.lastLoginTime = lastLoginTime;
+    }
+
+    public User()
+    {
+
     }
 
     public int getId() {
@@ -45,5 +52,20 @@ public class User {
 
     public void setLastLoginTime(String lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getNip() {
+        return nip;
+    }
+
+    public void setNip(String nip) {
+        this.nip = nip;
+    }
+
+    public void setLastLogin(String lastLogin) {
+        String[] splitted = lastLogin.split("T");
+        Log.i("LAST LOGIN ", splitted.toString());
+        setLastLoginDate(splitted[0]);
+        setLastLoginTime(splitted[1]);
     }
 }

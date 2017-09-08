@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,9 @@ public class UserFragment extends Fragment implements UserView {
         //Setup floating button and list voew
         setUp(v);
 
+        mUserPresenter.setUserContext(getActivity());
+        mUserPresenter.startApi();
+
         this.mFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 openAddUser();
@@ -55,6 +59,11 @@ public class UserFragment extends Fragment implements UserView {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 mUserPresenter.getUserDetail(position);
+                User mUserList = (User) mUserAdapter.getItem(position);
+                Log.i("USER LIST BY ID ====> ", mUserList.getId() + "");
+
+
+                mUserPresenter.getUserDetail(mUserList.getId());
             }
         });
 
@@ -75,20 +84,20 @@ public class UserFragment extends Fragment implements UserView {
         startActivity(intent);
     }
 
+    @Override
+    public void setUserListAdapter(List<User> mUserList) {
+        this.mUserAdapter = new UserListAdapter(getActivity(), mUserList);
+        this.mListView.setAdapter(mUserAdapter);
+    }
+
     private void setUp(View v)
     {
         //Floating Button
         this.mFab = (FloatingActionButton) v.findViewById(R.id.fb_add_user);
-
         //List View
         this.mListView = (ListView) v.findViewById(R.id.user_list);
-
-        this.mUserList = new ArrayList<>();
-        this.mUserList.add(new User(1, "Shalhan Radifan", "16/07/2018", "12:05:11"));
-        this.mUserList.add(new User(2, "M ALif", "12/06/2017", "11:05:11"));
-
-        this.mUserAdapter = new UserListAdapter(getActivity(), mUserList);
-        this.mListView.setAdapter(mUserAdapter);
     }
+
+
 
 }

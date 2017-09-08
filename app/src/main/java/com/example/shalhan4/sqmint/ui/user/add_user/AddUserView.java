@@ -6,4 +6,6 @@ package com.example.shalhan4.sqmint.ui.user.add_user;
 
 public interface AddUserView {
     public void openAuthDialog();
+    public void createAdminNotValid();
+    public void createAdminValid();
 }

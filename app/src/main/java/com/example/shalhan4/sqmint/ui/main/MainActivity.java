@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.shalhan4.sqmint.R;
 import com.example.shalhan4.sqmint.ui.job.JobFragment;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private MainPresenter mMainPresenter;
+    private TextView mName;
     SharedPreferences sharedPreferences;
 
 
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
+
 
         //Inisiasi MainPresenter
         this.mMainPresenter = new MainPresenter(this);
@@ -81,6 +84,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+
         return true;
     }
 
@@ -151,5 +156,15 @@ public class MainActivity extends AppCompatActivity
 
         this.navigationView = (NavigationView) findViewById(R.id.nav_view);
         this.navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+
+        Menu nav_menu = navigationView.getMenu();
+        if(!this.sharedPreferences.getString("STATUS", null).equals("Superadmin")) {
+            nav_menu.findItem(R.id.nav_super_admin).setVisible(false);
+        }
+
+        this.mName = (TextView) header.findViewById(R.id.tv_user_name);
+//        Log.i("HARUSNYA NAME ", this.sharedPreferences.getString("NAME", null));
+        this.mName.setText(this.sharedPreferences.getString("NAME", null));
     }
 }
