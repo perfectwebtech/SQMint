@@ -11,16 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.shalhan4.sqmint.R;
-import com.example.shalhan4.sqmint.ui.job.job_detail.JobDetailActivity;
 import com.example.shalhan4.sqmint.ui.user.add_user.AddUserActivity;
 import com.example.shalhan4.sqmint.ui.user.user_detail.UserDetailActivity;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,9 +67,17 @@ public class UserFragment extends Fragment implements UserView {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mUserPresenter.setUserContext(getActivity());
+        mUserPresenter.startApi();
+    }
+
+    @Override
     public void openUserDetail(int id)
     {
         Intent intent = new Intent(getActivity(), UserDetailActivity.class);
+        intent.putExtra("USER_ID", id);
         startActivity(intent);
     }
 
@@ -97,6 +101,7 @@ public class UserFragment extends Fragment implements UserView {
         //List View
         this.mListView = (ListView) v.findViewById(R.id.user_list);
     }
+
 
 
 

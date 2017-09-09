@@ -20,7 +20,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="CPU"
+                android:text="CPU Usage"
                 android:textColor="@color/colorText"
                 android:textSize="18sp" />
 
@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Memory"
+                android:text="Available Memory"
                 android:textColor="@color/colorText"
                 android:textSize="18sp"
                 android:layout_below="@+id/cpu_chart"

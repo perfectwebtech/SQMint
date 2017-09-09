@@ -9,13 +9,6 @@
     android:paddingBottom="@dimen/list_vertical_padding">
 
     <TextView
-        android:id="@+id/tv_job_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ID :"
-        android:textSize="@dimen/meta_text" />
-
-    <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

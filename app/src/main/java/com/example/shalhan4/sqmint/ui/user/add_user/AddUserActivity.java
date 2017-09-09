@@ -79,7 +79,6 @@ public class AddUserActivity extends Activity implements AddUserView {
     @Override
     public void createAdminValid()
     {
-        Intent intent = new Intent(this, AddUserActivity.class);
-        startActivity(intent);
+        finish();
     }
 }

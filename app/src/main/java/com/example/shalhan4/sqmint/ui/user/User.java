@@ -63,9 +63,16 @@ public class User {
     }
 
     public void setLastLogin(String lastLogin) {
-        String[] splitted = lastLogin.split("T");
-        Log.i("LAST LOGIN ", splitted.toString());
-        setLastLoginDate(splitted[0]);
-        setLastLoginTime(splitted[1]);
+        if(lastLogin.equals("null"))
+        {
+            setLastLoginTime("-");
+            setLastLoginDate("-");
+        }
+        else {
+            String[] splitted = lastLogin.split("T");
+            Log.i("LAST LOGIN ", splitted.toString());
+            setLastLoginDate(splitted[0]);
+            setLastLoginTime(splitted[1]);
+        }
     }
 }

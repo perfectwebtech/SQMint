@@ -7,9 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.shalhan4.sqmint.R;
 import com.example.shalhan4.sqmint.ui.job.job_detail.JobDetail;
+import com.example.shalhan4.sqmint.ui.job.job_detail.JobDetailActivity;
 import com.example.shalhan4.sqmint.ui.job.job_detail.JobDetailListAdapter;
 import com.example.shalhan4.sqmint.ui.main.MainActivity;
 import com.example.shalhan4.sqmint.ui.user.User;
@@ -17,11 +19,14 @@ import com.example.shalhan4.sqmint.ui.user.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDetailActivity extends AppCompatActivity{
+public class UserDetailActivity extends AppCompatActivity implements UserDetailView{
     private Toolbar toolbar;
     private ListView mListView;
+    private TextView userDetailName;
     private UserDetailListAdapter mUserDetailListAdapter;
     private List<UserDetail> mUserDetailList;
+    private int USER_ID;
+    private UserDetailPresenter mUserDetailPresenter;
 
 
     @Override
@@ -29,6 +34,11 @@ public class UserDetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
         setUp();
+
+        this.USER_ID = getIntent().getIntExtra("USER_ID", 0);
+        this.mUserDetailPresenter = new UserDetailPresenter(this, this.USER_ID);
+        this.mUserDetailPresenter.setUserDetailContext(this);
+        this.mUserDetailPresenter.startApi();
     }
 
     public void setUp()
@@ -41,13 +51,8 @@ public class UserDetailActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //ListView
+        this.userDetailName = (TextView) findViewById(R.id.tv_user_detail_name);
         this.mListView = (ListView) findViewById(R.id.lv_user_detail_list);
-        this.mUserDetailList = new ArrayList<>();
-        this.mUserDetailList.add(new UserDetail(1, "16/07/2018", "12:05:11"));
-        this.mUserDetailList.add(new UserDetail(2, "12/06/2017", "11:05:11"));
-
-        this.mUserDetailListAdapter = new UserDetailListAdapter(UserDetailActivity.this, this.mUserDetailList);
-        this.mListView.setAdapter(mUserDetailListAdapter);
     }
 
     @Override
@@ -65,4 +70,15 @@ public class UserDetailActivity extends AppCompatActivity{
     }
 
 
+    @Override
+    public void setJobDetailListAdapter(List<UserDetail> mUserDetailList) {
+        this.userDetailName.setText("Shalhan Radifan");
+        this.mUserDetailListAdapter = new UserDetailListAdapter(UserDetailActivity.this, mUserDetailList);
+        this.mListView.setAdapter(this.mUserDetailListAdapter);
+    }
+
+    @Override
+    public void userDetailListEmpty(){
+        this.userDetailName.setText("History still empty");
+    }
 }

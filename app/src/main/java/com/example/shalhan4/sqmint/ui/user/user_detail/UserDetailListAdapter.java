@@ -43,11 +43,9 @@ public class UserDetailListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = View.inflate(this.mContext, R.layout.job_detail_list, null);
 
-        TextView tvId = (TextView) v.findViewById(R.id.tv_user_id);
         TextView tvLoginDate = (TextView) v.findViewById(R.id.tv_login_date);
         TextView tvLoginTime = (TextView) v.findViewById(R.id.tv_login_time);
 
-        tvId.setText("" + this.mUserList.get(position).getId());
         tvLoginDate.setText(this.mUserList.get(position).getLoginDate());
         tvLoginTime.setText(this.mUserList.get(position).getLoginTime());
 

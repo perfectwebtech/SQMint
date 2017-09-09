@@ -85,7 +85,7 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
     @Override
     public void setJobDetailListAdapter(List<JobDetail> mJobDetailList)
     {
-        this.jobDetailName.setText(mJobDetailList.get(0).getJobName());
+//        this.jobDetailName.setText(mJobDetailList.get(0).getJobName());
         this.mJobDetailListAdapter = new JobDetailListAdapter(JobDetailActivity.this, mJobDetailList);
         this.mListView.setAdapter(this.mJobDetailListAdapter);
     }

@@ -37,7 +37,7 @@ public class AddUserPresenter implements AddUserPresenterIntf {
         if(this.username.equals(""))
             mAddUser.createAdminNotValid();
         else
-            new SQMintApi().execute("http://192.168.0.27:53293/api/user/manageadmin");
+            new SQMintApi().execute("http://192.168.0.27:53293/api/admin/addadmin");
     }
 
     @Override
@@ -83,9 +83,7 @@ public class AddUserPresenter implements AddUserPresenterIntf {
                 urlConnection.setDoOutput(true);
                 try
                 {
-                    String userAuth =
-                            "username=" + URLEncoder.encode(username, "UTF-8") +
-                                    "&privilege=" + URLEncoder.encode("Admin", "UTF-8");
+                    String userAuth = "username=" + URLEncoder.encode(username, "UTF-8");
                     Log.i("START OUTPUT STREAM", "HARUSNYA");
 
                     DataOutputStream os = new DataOutputStream(urlConnection.getOutputStream());

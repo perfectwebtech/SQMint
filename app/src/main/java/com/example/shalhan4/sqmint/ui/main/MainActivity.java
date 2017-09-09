@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity
         View header=navigationView.getHeaderView(0);
 
         Menu nav_menu = navigationView.getMenu();
-        if(!this.sharedPreferences.getString("STATUS", null).equals("Superadmin")) {
+        if(!this.sharedPreferences.getString("STATUS", null).equals("SUPERADMIN")) {
             nav_menu.findItem(R.id.nav_super_admin).setVisible(false);
         }
 

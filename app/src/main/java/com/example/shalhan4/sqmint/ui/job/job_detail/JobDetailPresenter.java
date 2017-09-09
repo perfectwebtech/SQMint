@@ -37,15 +37,10 @@ public class JobDetailPresenter {
     {
         mJobDetailView = mJobDetail;
         this.jobId = jobId;
-//        new SQMintApi().execute("http://192.168.0.103:50447/API/jobs/" + jobId); //kosan
     }
 
     public void startApi()
     {
-//        new SQMintApi().execute("http://192.168.0.10:53293/API/job/" + this.jobId); //laptop dikna koneksi kelly
-//        new SQMintApi().execute("http://192.168.43.118:53293/API/job/" + this.jobId); //laptop aten koneksi shalhan
-//        new SQMintApi().execute("http://192.168.43.215:53293/API/job/" + this.jobId); //laptop aten koneksi dikna
-//        new SQMintApi().execute("http://192.168.0.12:53293/API/job/" + this.jobId); //laptop aten koneksi dikna
         new SQMintApi().execute("http://192.168.0.27:53293/api/job/jobhistory/" + this.jobId); //laptop shalhan koneksi kosan
 
     }
@@ -89,20 +84,8 @@ public class JobDetailPresenter {
                         jobDetails.setStatus(jobDetailObject.getString("runOutcome"));
                         jobDetails.setDuration(jobDetailObject.getString("duration"));
 
-                        String jobActivity = jobDetailObject.getString("jobActivity");
-                        jobDetails.setJobName(jobDetailObject.getJSONObject("jobActivity").getString("name"));
+                        jobDetails.setJobName(jobDetailObject.getJSONObject("jobList").getString("name"));
 
-//                        Log.i("JOB ACTIVITY", jobDetailObject.getJSONObject("jobActivity").length() + "");
-//                        JSONArray jobArray = new JSONArray(jobActivity);
-//                        for(int j = 0; j<jobArray.length(); j++)
-//                        {
-////                            JSONObject jobObject = jobArray.getJSONObject(j);
-////                            jobDetails.setJobName(jobObject.getString("name"));
-//                        }
-////                        for(int j = 0; j< jobDetailObject.getJSONArray("jobActivity").length(); j++)
-////                        {
-////                            jobDetails.setJobName(jobDetailObject.getJSONArray("jobActivity").getJSONObject(j).getString("name"));
-////                        }
                         jobDetailList.add(jobDetails);
                     }
 
