@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shalhan4.sqmint">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -27,7 +27,9 @@
             android:label="@string/title_activity_user_detail" />
         <activity
             android:name=".ui.user.add_user.AddUserActivity"
-            android:label="@string/title_activity_add_user"></activity>
+            android:label="@string/title_activity_add_user" />
+        <activity
+            android:name=".ui.monitoring.MonitoringActivity"></activity>
     </application>
 
 </manifest>

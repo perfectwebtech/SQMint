@@ -3,25 +3,20 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_job"
+            android:id="@+id/nav_dashboard"
             android:icon="@drawable/ic_menu_job"
-            android:title="Jobs" />
-        <item
-            android:id="@+id/nav_usage"
-            android:icon="@drawable/ic_menu_cpu"
-            android:title="Usage" />
+            android:title="Dashboard" />
     </group>
 
-
     <item
-        android:title="Super User"
+        android:title="Super Admin"
         android:id="@+id/nav_super_admin">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_user"
                     android:icon="@drawable/ic_menu_user"
-                    android:title="Users" />
+                    android:title="Admins" />
             </group>
         </menu>
     </item>

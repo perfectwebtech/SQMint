@@ -16,6 +16,8 @@
     <string name="job_fragment">Jobs</string>
     <string name="usage_fragment">Usage</string>
     <string name="user_fragment">User</string>
+    <string name="server_fragment">SQMint</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -28,6 +30,8 @@
     <string name="tv_not_valid_admin">Username is not valid</string>
 
     <string name="btn_signup">Sign up</string>
+    <string name="title_activity_monitoring">MonitoringActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 
 </resources>

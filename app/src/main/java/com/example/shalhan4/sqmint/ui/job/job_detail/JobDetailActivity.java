@@ -19,6 +19,7 @@ import com.example.shalhan4.sqmint.ui.job.JobFragment;
 import com.example.shalhan4.sqmint.ui.job.JobListAdapter;
 import com.example.shalhan4.sqmint.ui.job.JobPresenter;
 import com.example.shalhan4.sqmint.ui.main.MainActivity;
+import com.example.shalhan4.sqmint.ui.monitoring.MonitoringActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -72,7 +73,7 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(JobDetailActivity.this, MainActivity.class);
+                Intent intent = new Intent(JobDetailActivity.this, MonitoringActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
@@ -85,7 +86,7 @@ public class JobDetailActivity extends AppCompatActivity implements JobDetailVie
     @Override
     public void setJobDetailListAdapter(List<JobDetail> mJobDetailList)
     {
-//        this.jobDetailName.setText(mJobDetailList.get(0).getJobName());
+        this.jobDetailName.setText(mJobDetailList.get(0).getJobName());
         this.mJobDetailListAdapter = new JobDetailListAdapter(JobDetailActivity.this, mJobDetailList);
         this.mListView.setAdapter(this.mJobDetailListAdapter);
     }

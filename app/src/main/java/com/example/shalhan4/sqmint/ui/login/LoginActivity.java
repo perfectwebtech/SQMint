@@ -1,6 +1,5 @@
 package com.example.shalhan4.sqmint.ui.login;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
@@ -13,12 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.shalhan4.sqmint.R;
 import com.example.shalhan4.sqmint.ui.main.MainActivity;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by shalhan4 on 4/27/2017.

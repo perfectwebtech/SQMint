@@ -7,7 +7,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.shalhan4.sqmint.R;
-import com.example.shalhan4.sqmint.ui.job.Job;
 
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class UserListAdapter extends BaseAdapter {
 
         TextView tvNip = (TextView) v.findViewById(R.id.user_nip);
         TextView tvUserName = (TextView) v.findViewById(R.id.user_name);
-        TextView tvLastLoginDate = (TextView) v.findViewById(R.id.user_last_login_date);
+        TextView tvLastLoginDate = (TextView) v.findViewById(R.id.server_username);
         TextView tvLastLoginTime = (TextView) v.findViewById(R.id.user_last_login_time);
 
         tvNip.setText(this.mUserList.get(position).getNip());

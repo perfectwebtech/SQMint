@@ -1,6 +1,7 @@
 package com.example.shalhan4.sqmint.ui.user;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -31,7 +32,6 @@ public class UserFragment extends Fragment implements UserView {
     public UserFragment() {
         this.mUserPresenter = new UserPresenter(this);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

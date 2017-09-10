@@ -1,5 +1,6 @@
 package com.example.shalhan4.sqmint.ui.main;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -19,13 +20,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.shalhan4.sqmint.R;
 import com.example.shalhan4.sqmint.ui.job.JobFragment;
 import com.example.shalhan4.sqmint.ui.login.LoginActivity;
+import com.example.shalhan4.sqmint.ui.server.ServerFragment;
 import com.example.shalhan4.sqmint.ui.usage.UsageFragment;
 import com.example.shalhan4.sqmint.ui.user.UserFragment;
+import com.example.shalhan4.sqmint.ui.user.add_user.AddUserActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, IMainActivity {
@@ -115,20 +120,15 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        JobFragment fragmentJob;
-        UsageFragment fragmentUsage;
         UserFragment fragmentUser;
+        ServerFragment fragmentServer;
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        if (id == R.id.nav_job) {
-            this.toolbar.setTitle(R.string.job_fragment);
-            fragmentJob = new JobFragment();
-            fragmentTransaction.replace(R.id.frame,fragmentJob);
-            fragmentTransaction.commit();
-        } else if (id == R.id.nav_usage) {
-            this.toolbar.setTitle(R.string.usage_fragment);
-            fragmentUsage = new UsageFragment();
-            fragmentTransaction.replace(R.id.frame, fragmentUsage);
+        if (id == R.id.nav_dashboard) {
+            this.toolbar.setTitle(R.string.server_fragment);
+            fragmentServer = new ServerFragment();
+            fragmentTransaction.replace(R.id.frame, fragmentServer);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_user) {
             this.toolbar.setTitle(R.string.user_fragment);
@@ -167,4 +167,6 @@ public class MainActivity extends AppCompatActivity
 //        Log.i("HARUSNYA NAME ", this.sharedPreferences.getString("NAME", null));
         this.mName.setText(this.sharedPreferences.getString("NAME", null));
     }
+
+
 }
