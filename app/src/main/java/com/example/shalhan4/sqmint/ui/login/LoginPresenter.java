@@ -33,8 +33,8 @@ public class LoginPresenter implements ILoginPresenter {
     private Context context;
 
     //shared preferences
-    public static final String PREFERENCES_NAME = "SQMINT";
     public static final String USERNAME = "USERNAME";
+    public static final String ADMIN_ID = "ADMIN_ID";
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static final String TOKEN_TYPE = "TOKEN_TYPE";
     public static final String EXPIRES_IN = "EXPIRES_IN";
@@ -63,7 +63,7 @@ public class LoginPresenter implements ILoginPresenter {
             this.username = username;
             this.password = password;
 
-            new SQMintApi().execute("http://192.168.0.27:53293/token"); //koneksi kosan
+            new SQMintApi().execute("http://192.168.43.13:53293/token"); //koneksi kosan
 
 
         }
@@ -158,7 +158,7 @@ public class LoginPresenter implements ILoginPresenter {
                     editor.putString(USERNAME, username);
                     editor.putString(NAME, userObj.getString("name"));
                     editor.putString(STATUS, userObj.getString("status"));
-
+                    editor.putString(ADMIN_ID, userObj.getString("admin_id"));
                     editor.putString(ACCESS_TOKEN, userObj.getString("access_token"));
                     editor.putString(TOKEN_TYPE, userObj.getString("token_type"));
                     editor.putString(EXPIRES_IN, userObj.getString("expires_in"));

@@ -37,7 +37,7 @@ public class AddUserPresenter implements AddUserPresenterIntf {
         if(this.username.equals(""))
             mAddUser.createAdminNotValid();
         else
-            new SQMintApi().execute("http://192.168.0.27:53293/api/admin/addadmin");
+            new SQMintApi().execute("http://192.168.0.128:53293/api/admin/addadmin");
     }
 
     @Override

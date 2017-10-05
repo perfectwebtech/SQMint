@@ -44,7 +44,7 @@ public class UserListAdapter extends BaseAdapter {
 
         TextView tvNip = (TextView) v.findViewById(R.id.user_nip);
         TextView tvUserName = (TextView) v.findViewById(R.id.user_name);
-        TextView tvLastLoginDate = (TextView) v.findViewById(R.id.server_username);
+        TextView tvLastLoginDate = (TextView) v.findViewById(R.id.tv_server_username);
         TextView tvLastLoginTime = (TextView) v.findViewById(R.id.user_last_login_time);
 
         tvNip.setText(this.mUserList.get(position).getNip());

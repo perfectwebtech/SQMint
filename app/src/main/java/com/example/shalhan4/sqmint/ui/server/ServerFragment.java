@@ -9,40 +9,43 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.shalhan4.sqmint.R;
-import com.example.shalhan4.sqmint.ui.main.MainActivity;
-import com.example.shalhan4.sqmint.ui.user.User;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ServerFragment extends Fragment {
+public class ServerFragment extends Fragment implements ServerView {
     private FloatingActionButton mFab;
     private ListView mListView;
+    private ServerListAdapter mServerAdapter;
+    private ServerPresenter mServerPresenter;
 
-
-
-    public ServerFragment() {
-        // Required empty public constructor
+    public ServerFragment()
+    {
+        this.mServerPresenter = new ServerPresenter(this);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_server, container, false);
 
-        this.mFab = (FloatingActionButton) v.findViewById(R.id.fb_add_server);
+        this.mServerPresenter.setServerContext(getActivity());
+        this.mServerPresenter.startApi();
 
+        this.mListView = (ListView) v.findViewById(R.id.lv_server_list);
+
+        this.mFab = (FloatingActionButton) v.findViewById(R.id.fb_add_server);
         this.mFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                openConnectServerDialog(v);
+                openConnectServerDialog();
             }
         });
 
@@ -61,28 +64,95 @@ public class ServerFragment extends Fragment {
         return v;
     }
 
-    public void openConnectServerDialog(View v)
+    private AlertDialog connectServerDialog;
+    public void openConnectServerDialog()
     {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-//        View v = getLayoutInflater().inflate(R.layout.dialog_auth, null);
+        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_server, null);
 
-        EditText mIp = (EditText) v.findViewById(R.id.et_ipaddress);
-        EditText mPort = (EditText) v.findViewById(R.id.et_port);
-        EditText mUsername = (EditText) v.findViewById(R.id.et_username_server);
-        EditText mPassword = (EditText) v.findViewById(R.id.et_password_server);
-        Button mBtnLogin = (Button) v.findViewById(R.id.btn_login_add_user);
+        final EditText mIp = (EditText) v.findViewById(R.id.et_ipaddress);
+        final EditText mUsername = (EditText) v.findViewById(R.id.et_username_server);
+        final EditText mPassword = (EditText) v.findViewById(R.id.et_password_server);
+        Button mBtnLogin = (Button) v.findViewById(R.id.btn_connect_server);
 
         mBuilder.setView(v);
-        AlertDialog dialog = mBuilder.create();
-        dialog.show();
+        this.connectServerDialog = mBuilder.create();
+        this.connectServerDialog.show();
 
         mBtnLogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view)
             {
                 Log.i("HALO => ", "HALO JUGA");
+                mServerPresenter.addServer(mIp.getText().toString(), mUsername.getText().toString(), mPassword.getText().toString() );
             }
         });
     }
 
+    private AlertDialog alertDialog;
+    public void openAlertDialog(int serverId)
+    {
+        final int selectedServerId = serverId;
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
+        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_alert, null);
+
+        TextView mMessage = (TextView) v.findViewById(R.id.tv_message);
+        Button bYes = (Button) v.findViewById(R.id.btn_alert_yes);
+        bYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mServerPresenter.deleteServer(selectedServerId);
+            }
+        });
+
+        mBuilder.setView(v);
+        this.alertDialog = mBuilder.create();
+        this.alertDialog.show();
+    }
+
+    @Override
+    public void setServerListAdapter(List<Server> mServerList) {
+        this.mServerAdapter = new ServerListAdapter(getActivity(), mServerList, this);
+        this.mListView.setAdapter(mServerAdapter);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void deleteServer(int id)
+    {
+        this.openAlertDialog(id);
+        Log.i("CLICK DI FRAGMENT", "YEAY " + id);
+    }
+
+    @Override
+    public void deleteSuccess() {
+        Log.i("Yeayy berhasil masuk", "yeay");
+        this.mServerPresenter.startApi();
+        this.alertDialog.dismiss();
+    }
+
+    @Override
+    public void deleteFailed() {
+        Log.i("Yeayy berhasil failed", "yeay");
+        this.mServerPresenter.startApi();
+        this.alertDialog.dismiss();
+    }
+
+    @Override
+    public void addServerSuccess() {
+        Log.i("Yeayy berhasil sukses", "yeay");
+        this.mServerPresenter.startApi();
+        this.connectServerDialog.dismiss();
+    }
+
+    @Override
+    public void addServerFailed() {
+        Log.i("Yeayy berhasil failed", "yeay");
+        this.mServerPresenter.startApi();
+        this.connectServerDialog.dismiss();
+    }
 }

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Shalhan Radifan"
-        android:textColor="@color/colorText"
+        android:textColor="@color/colorTextBlack"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -47,13 +47,13 @@
         android:id="@+id/user_nip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/server_username"
-        android:layout_alignStart="@+id/server_username"
+        android:layout_alignLeft="@+id/tv_server_username"
+        android:layout_alignStart="@+id/tv_server_username"
         android:layout_below="@+id/user_name"
         android:text="64130087" />
 
     <TextView
-        android:id="@+id/server_username"
+        android:id="@+id/tv_server_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView7"
@@ -67,9 +67,9 @@
         android:id="@+id/user_last_login_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/server_username"
-        android:layout_alignStart="@+id/server_username"
-        android:layout_below="@+id/server_username"
+        android:layout_alignLeft="@+id/tv_server_username"
+        android:layout_alignStart="@+id/tv_server_username"
+        android:layout_below="@+id/tv_server_username"
         android:text="13:01:15" />
 
 </RelativeLayout>
