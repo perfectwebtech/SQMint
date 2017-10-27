@@ -63,7 +63,7 @@ public class LoginPresenter implements ILoginPresenter {
             this.username = username;
             this.password = password;
 
-            new SQMintApi().execute("http://192.168.43.13:53293/token"); //koneksi kosan
+            new SQMintApi().execute("http://192.168.1.114:53293/token"); //koneksi kosan
 
 
         }
@@ -83,8 +83,8 @@ public class LoginPresenter implements ILoginPresenter {
             try {
                 URL url = new URL(params[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setReadTimeout(20000);
-                urlConnection.setConnectTimeout(20000);
+                urlConnection.setReadTimeout(25000);
+                urlConnection.setConnectTimeout(25000);
                 urlConnection.setRequestMethod("POST");
                 urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 urlConnection.setRequestProperty("charset", "utf-8");
@@ -144,7 +144,6 @@ public class LoginPresenter implements ILoginPresenter {
             super.onPostExecute(response);
             mLoginActivity.stopProgressBar();
             mLoginActivity.enableComponent();
-            Log.i("HASILNYA NIH", response);
             if(!response.isEmpty()) {
                 Log.i("BERHASIL LOGIN", "YEAY");
                 //get result

@@ -9,7 +9,8 @@ import java.util.List;
  */
 
 public interface JobView {
-    public void openJobDetail(int id);
+    public void openJobDetail(int id, int serverId);
     public void setJobListAdapter(List<Job> mJobList);
+    public void connectionError();
 
 }

@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/et_username"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="@color/colorTextBlack" />
 
         <EditText
             android:id="@+id/etPassword"
@@ -34,7 +35,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/et_password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textColor="@color/colorTextBlack" />
 
         <Button
             android:id="@+id/btnLogin"
@@ -64,11 +66,45 @@
             android:visibility="invisible"/>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="217dp"
-        app:srcCompat="@drawable/ic_logo" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="80dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="22dp"
+            android:layout_marginStart="22dp"
+            app:srcCompat="@drawable/ic_logo" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SQMint"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="22dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageView"
+            android:layout_toEndOf="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView"
+            android:layout_toEndOf="@+id/imageView"
+            android:layout_toRightOf="@+id/imageView"
+            android:text="MSSQL monitoring apps by IPB" />
+
+    </RelativeLayout>
 
 
 </FrameLayout>

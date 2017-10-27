@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Job Name"
-        android:textColor="@color/colorText"
+        android:textColor="@color/colorTextBlack"
         android:textSize="18sp"
         android:textStyle="bold" />
 

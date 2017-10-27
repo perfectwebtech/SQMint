@@ -28,6 +28,8 @@ public class JobPresenter implements JobPresenterIntf{
     //SharedPreferences
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static final String TOKEN_TYPE = "TOKEN_TYPE";
+    private int JOB_ID;
+
 
 
 
@@ -37,9 +39,9 @@ public class JobPresenter implements JobPresenterIntf{
     }
 
     @Override
-    public void startApi()
+    public void startApi(int id)
     {
-        new SQMintApi().execute("http://192.168.0.27:53293/api/job/getjob"); //laptop shalhan koneksi kosan
+        new SQMintApi().execute("http://192.168.1.114:53293/api/job/" + id); //laptop shalhan koneksi kosan
     }
 
     @Override
@@ -59,8 +61,8 @@ public class JobPresenter implements JobPresenterIntf{
 
 
     @Override
-    public void getJobDetail(int id) {
-        this.mJobView.openJobDetail(id);
+    public void getJobDetail(int id, int serverId) {
+        this.mJobView.openJobDetail(id, serverId);
     }
 
     public class SQMintApi extends AsyncTask<String, String, List<Job> > {
@@ -105,12 +107,16 @@ public class JobPresenter implements JobPresenterIntf{
             }
             catch(Exception e) {
                 Log.e("ERROR", e.getMessage(), e);
-                return null;
+                List<Job> jobList = new ArrayList<>();
+
+                return jobList;
             }
         }
 
         protected void onPostExecute(List<Job> response) {
             super.onPostExecute(response);
+            if(response.isEmpty())
+                mJobView.connectionError();
             mJobView.setJobListAdapter(response);
         }
     }

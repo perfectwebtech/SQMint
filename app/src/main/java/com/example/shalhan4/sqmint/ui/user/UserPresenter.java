@@ -53,7 +53,7 @@ public class UserPresenter implements UserPresenterIntf {
     @Override
     public void startApi()
     {
-        new SQMintApi().execute("http://192.168.0.128:53293/api/user/userlist"); //laptop shalhan koneksi kosan
+        new SQMintApi().execute("http://192.168.1.114:53293/api/user/userlist"); //laptop shalhan koneksi kosan
     }
 
     public class SQMintApi extends AsyncTask<String, String, List<User> > {

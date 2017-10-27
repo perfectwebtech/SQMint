@@ -1,5 +1,6 @@
 package com.example.shalhan4.sqmint.ui.monitoring;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,16 +42,25 @@ public class MonitoringActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private int SERVER_ID;
+    private String IP_ADDRESS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoring);
 
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        this.SERVER_ID = extras.getInt("SERVER_ID", 0);
+        this.IP_ADDRESS = extras.getString("IP_ADDRESS");
+
+        Log.i("MONITORING ACTIVITY =>", this.SERVER_ID + " " + this.IP_ADDRESS);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_2);
         //Toolbar
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("192.168.0.27");
+        getSupportActionBar().setTitle(this.IP_ADDRESS);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setSupportActionBar(toolbar);
@@ -110,9 +121,11 @@ public class MonitoringActivity extends AppCompatActivity {
             switch (position){
                 case 0:
                     JobFragment jobFragment = new JobFragment();
+                    jobFragment.setServerId(SERVER_ID);
                     return jobFragment;
                 case 1:
                     UsageFragment usageFragment = new UsageFragment();
+                    usageFragment.setServerId(SERVER_ID);
                     return usageFragment;
             }
 
@@ -135,5 +148,11 @@ public class MonitoringActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

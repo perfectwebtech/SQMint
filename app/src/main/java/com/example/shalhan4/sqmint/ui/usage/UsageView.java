@@ -13,4 +13,5 @@ public interface UsageView {
     public void setCpuUsageChart();
     public void addEntryMemoryUsage();
     public void addEntryCpuUsage();
+    public void connectionError();
 }

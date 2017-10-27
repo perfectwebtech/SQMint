@@ -49,16 +49,15 @@ public class ServerListAdapter extends BaseAdapter {
         View v = View.inflate(this.mContext, R.layout.server_list, null);
 
         TextView tvServerIp = (TextView) v.findViewById(R.id.tv_server_ip);
-        TextView tvServerAdmin = (TextView) v.findViewById(R.id.tv_server_admin);
         TextView tvServerUsername = (TextView) v.findViewById(R.id.tv_server_username);
 
         ImageButton ibServerDelete = (ImageButton) v.findViewById(R.id.ib_server_delete);
 
         tvServerIp.setText(this.mServerList.get(position).getIpAddress());
-        tvServerAdmin.setText(this.mServerList.get(position).getAdmin());
         tvServerUsername.setText(this.mServerList.get(position).getUsername());
 
 //        ibServerDelete.setTag(mServerList.get(position).getId());
+        ibServerDelete.setFocusable(false);
         ibServerDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

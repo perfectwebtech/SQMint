@@ -13,5 +13,6 @@ public interface ServerView {
     public void deleteFailed();
     public void addServerSuccess();
     public void addServerFailed();
+    public void openMonitoringPage(int id, String ipAddress);
 
 }

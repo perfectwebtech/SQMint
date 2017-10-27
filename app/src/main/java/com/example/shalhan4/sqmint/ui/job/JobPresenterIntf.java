@@ -7,8 +7,8 @@ import android.content.Context;
  */
 
 public interface JobPresenterIntf {
-    public void getJobDetail(int id);
+    public void getJobDetail(int id, int serverId);
     public String getAccessToken();
     public void setJobContext(Context context);
-    public void startApi();
+    public void startApi(int id);
 }

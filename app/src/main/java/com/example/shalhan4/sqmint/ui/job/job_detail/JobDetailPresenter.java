@@ -23,6 +23,7 @@ import java.util.List;
  */
 
 public class JobDetailPresenter {
+    private int serverId;
     private JobDetailView mJobDetailView;
     private int jobId;
     private Context context;
@@ -33,15 +34,16 @@ public class JobDetailPresenter {
     public static final String TOKEN_TYPE = "TOKEN_TYPE";
     public static final String EXPIRES_IN = "EXPIRES_IN";
 
-    public JobDetailPresenter(JobDetailView mJobDetail, int jobId)
+    public JobDetailPresenter(JobDetailView mJobDetail, int jobId, int serverId)
     {
         mJobDetailView = mJobDetail;
         this.jobId = jobId;
+        this.serverId = serverId;
     }
 
     public void startApi()
     {
-        new SQMintApi().execute("http://192.168.0.27:53293/api/job/jobhistory/" + this.jobId); //laptop shalhan koneksi kosan
+        new SQMintApi().execute("http://192.168.1.114:53293/api/job/"+ this.serverId + "/" + this.jobId); //laptop shalhan koneksi kosan
 
     }
 

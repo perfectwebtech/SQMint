@@ -3,7 +3,7 @@
     <color name="colorPrimary">#1565c0</color>
     <color name="colorPrimaryDark">#46a5e5</color>
     <color name="colorAccent">#08085e</color>
-    <color name="colorText">#fff</color>
+    <color name="colorText">#ecf0f1</color>
     <color name="colorTextBlack">#332c2b</color>
     <color name="fieldOnError">#df2424</color>
 </resources>

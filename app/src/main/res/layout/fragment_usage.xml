@@ -5,48 +5,64 @@
     tools:context="com.example.shalhan4.sqmint.ui.usage.UsageFragment"
 >
 
-    <!-- TODO: Update blank fragment layout -->
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/bg_error_usage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:text="Failed to connect to server. Please check your connection and your IP Address" />
+    </LinearLayout>
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:id="@+id/sv_usage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="24dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp">
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="24dp">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="CPU Usage"
-                android:textColor="@color/colorText"
+                android:text="CPU Busy"
+                android:textColor="@color/colorTextBlack"
                 android:textSize="18sp" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/cpu_chart"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                android:layout_marginTop="42dp"/>
+                android:layout_marginTop="42dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Available Memory"
-                android:textColor="@color/colorText"
-                android:textSize="18sp"
-                android:layout_below="@+id/cpu_chart"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="24dp"/>
+                android:layout_below="@+id/cpu_chart"
+                android:layout_marginTop="24dp"
+                android:text="Memory Usage"
+                android:textColor="@color/colorTextBlack"
+                android:textSize="18sp" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/memory_chart"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                android:layout_marginTop="460dp"
-                android:layout_marginBottom="50dp"/>
+                android:layout_marginBottom="120dp"
+                android:layout_marginTop="460dp" />
         </RelativeLayout>
     </ScrollView>
 </FrameLayout>

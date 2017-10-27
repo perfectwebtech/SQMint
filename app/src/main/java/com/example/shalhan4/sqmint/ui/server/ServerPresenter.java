@@ -1,6 +1,7 @@
 package com.example.shalhan4.sqmint.ui.server;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -9,6 +10,7 @@ import android.util.Log;
 import com.example.shalhan4.sqmint.ui.job.Job;
 import com.example.shalhan4.sqmint.ui.job.JobPresenter;
 import com.example.shalhan4.sqmint.ui.job.JobView;
+import com.example.shalhan4.sqmint.ui.job.job_detail.JobDetailActivity;
 import com.example.shalhan4.sqmint.ui.user.UserPresenter;
 
 import org.json.JSONArray;
@@ -40,6 +42,10 @@ public class ServerPresenter {
     public static final String TOKEN_TYPE = "TOKEN_TYPE";
     public static final String ADMIN_ID = "ADMIN_ID";
 
+    public void openMonitoring(int id, String ipAddress){
+        this.mServerView.openMonitoringPage(id, ipAddress);
+    }
+
     public ServerPresenter(ServerView serverView)
     {
         this.mServerView = serverView;
@@ -51,10 +57,6 @@ public class ServerPresenter {
 //        Log.i("TOKEN TYPE", this.sharedPreferences.getString(ACCESS_TOKEN, null));
     }
 
-    public String getAdminId(){
-        return this.sharedPreferences.getString(ADMIN_ID, null);
-    }
-
     public void setServerContext(Context context) {
         this.context = context;
     }
@@ -62,14 +64,13 @@ public class ServerPresenter {
     public void startApi()
     {
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context);
-        new SQMintApi().execute("http://192.168.43.13:53293/api/server/" + this.getAdminId()); //laptop shalhan koneksi kosan
-        Log.i("ADMIN ID ==> ", this.getAdminId());
+        new SQMintApi().execute("http://192.168.1.114:53293/api/server"); //laptop shalhan koneksi kosan
     }
 
     public void deleteServer(int id)
     {
         Log.i("SERVER ID ", id + "");
-        new SQMintApiDelete().execute("http://192.168.43.13:53293/api/server/remove/" + id + "/" + this.getAdminId());
+        new SQMintApiDelete().execute("http://192.168.1.114:53293/api/server/remove/" + id);
     }
 
     public void addServer(String ipAddress, String username, String password)
@@ -79,7 +80,7 @@ public class ServerPresenter {
         this.password = password;
         if(this.username.equals("") || this.ipAddress.equals("") || this.password.equals(""));
         else
-            new SQMintApiPost().execute("http://192.168.43.13:53293/api/server/connect");
+            new SQMintApiPost().execute("http://192.168.1.114:53293/api/server/connect");
     }
 
     public class SQMintApi extends AsyncTask<String, String, List<Server> > {
@@ -125,13 +126,15 @@ public class ServerPresenter {
             }
             catch(Exception e) {
                 Log.e("ERROR", e.getMessage(), e);
-                return null;
+                List<Server> serverList = new ArrayList<>();
+                return serverList;
             }
         }
 
         protected void onPostExecute(List<Server> response) {
             super.onPostExecute(response);
-            if(response != null)
+            Log.i("LIST SERVER ", response.toString() );
+            if(!response.isEmpty())
                 mServerView.setServerListAdapter(response);
         }
     }
@@ -219,7 +222,7 @@ public class ServerPresenter {
             }
             catch(Exception e) {
                 Log.e("ERROR", e.getMessage(), e);
-                return null;
+                return "FAILED";
             }
         }
 

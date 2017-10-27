@@ -43,7 +43,7 @@ public class UserDetailPresenter implements UserDetailPresenterIntf {
 
     @Override
     public void startApi() {
-        new SQMintApi().execute("http://192.168.0.27:53293/api/admin/loginhistory/" + this.userId); //laptop shalhan koneksi kosan
+        new SQMintApi().execute("http://192.168.1.114:53293/api/admin/loginhistory/" + this.userId); //laptop shalhan koneksi kosan
     }
 
     @Override

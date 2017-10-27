@@ -6,9 +6,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.example.shalhan4.sqmint.R;
 import com.github.mikephil.charting.charts.LineChart;
@@ -32,15 +35,24 @@ public class UsageFragment extends Fragment implements UsageView{
     private List<Usage> mUsage;
     private UsagePresenter mUsagePresenter;
     private Handler mHandler = new Handler();
+    private int SERVER_ID;
+    private View view;
+    private Thread threadUsage;
 
     public UsageFragment() {
         // Required empty public constructor
     }
 
+    public void setServerId(int id){this.SERVER_ID = id;}
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_usage, container, false);
+        this.view = v;
+
         this.mUsagePresenter = new UsagePresenter(this);
 
         this.mUsagePresenter.setUsageContext(getActivity());
@@ -57,15 +69,10 @@ public class UsageFragment extends Fragment implements UsageView{
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        thread.interrupt();
-    }
-
-    @Override
     public void onDetach() {
         super.onDetach();
-        thread.interrupt();
+        Log.i("ON Detach", "YEAH");
+        threadUsage.interrupt();
     }
 
     @Override
@@ -79,7 +86,7 @@ public class UsageFragment extends Fragment implements UsageView{
             // set.addEntry(...); // can be called as well
 
             if (set == null) {
-                set = createSet();
+                set = createSet("MSSQL memory usage");
                 data.addDataSet(set);
             }
 
@@ -89,16 +96,11 @@ public class UsageFragment extends Fragment implements UsageView{
             // let the chart know it's data has changed
             memoryUsageChart.notifyDataSetChanged();
 
-            // limit the number of visible entries
-            memoryUsageChart.setVisibleXRangeMaximum(120);
-            // memoryUsageChart.setVisibleYRange(30, AxisDependency.LEFT);
+            memoryUsageChart.setVisibleXRangeMaximum(6);
+            // mChart.setVisibleYRange(30, AxisDependency.LEFT);
 
             // move to the latest entry
             memoryUsageChart.moveViewToX(data.getEntryCount());
-
-            // this automatically refreshes the chart (calls invalidate())
-            // memoryUsageChart.moveViewTo(data.getXValCount()-7, 55f,
-            // AxisDependency.LEFT);
         }
     }
 
@@ -112,7 +114,7 @@ public class UsageFragment extends Fragment implements UsageView{
             // set.addEntry(...); // can be called as well
 
             if (set == null) {
-                set = createSet();
+                set = createSet("CPU busy in seconds");
                 data.addDataSet(set);
             }
 
@@ -122,16 +124,11 @@ public class UsageFragment extends Fragment implements UsageView{
             // let the chart know it's data has changed
             cpuUsageChart.notifyDataSetChanged();
 
-            // limit the number of visible entries
-            cpuUsageChart.setVisibleXRangeMaximum(120);
-            // memoryUsageChart.setVisibleYRange(30, AxisDependency.LEFT);
+            cpuUsageChart.setVisibleXRangeMaximum(6);
+            // mChart.setVisibleYRange(30, AxisDependency.LEFT);
 
             // move to the latest entry
             cpuUsageChart.moveViewToX(data.getEntryCount());
-
-            // this automatically refreshes the chart (calls invalidate())
-            // memoryUsageChart.moveViewTo(data.getXValCount()-7, 55f,
-            // AxisDependency.LEFT);
         }
     }
 
@@ -143,9 +140,9 @@ public class UsageFragment extends Fragment implements UsageView{
         addEntryCpuUsage();
     }
 
-    private LineDataSet createSet() {
+    private LineDataSet createSet(String desc) {
 
-        LineDataSet set = new LineDataSet(null, "Dynamic Data");
+        LineDataSet set = new LineDataSet(null, desc);
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
         set.setColor(ColorTemplate.getHoloBlue());
         set.setCircleColor(Color.WHITE);
@@ -160,15 +157,14 @@ public class UsageFragment extends Fragment implements UsageView{
         return set;
     }
 
-    private Thread thread;
 
     private void feedMultiple() {
 
-        if (thread != null)
-            thread.interrupt();
+        if (threadUsage != null)
+            threadUsage.interrupt();
 
 
-        thread = new Thread(new Runnable() {
+        threadUsage = new Thread(new Runnable() {
             int i = 0;
             public void run() {
                 while ( i < 100) {
@@ -177,22 +173,21 @@ public class UsageFragment extends Fragment implements UsageView{
                     // Update the progress bar
                     mHandler.post(new Runnable() {
                         public void run() {
-                            mUsagePresenter.getUsage();
+                            mUsagePresenter.getUsage(SERVER_ID);
                         }
                     });
 
-
                     try{
-                        Thread.sleep(3000);
+                        Thread.sleep(1500);
                     }
                     catch(InterruptedException e)
                     {
-                        e.printStackTrace();
+                        break;
                     }
                 }
             }
         });
-        thread.start();
+        threadUsage.start();
     }
 
 
@@ -287,12 +282,22 @@ public class UsageFragment extends Fragment implements UsageView{
         xl.setEnabled(true);
 
         YAxis leftAxis = cpuUsageChart.getAxisLeft();
+        leftAxis.setLabelCount(6);
         leftAxis.setTextColor(Color.WHITE);
-        leftAxis.setAxisMaximum(100f);
-        leftAxis.setAxisMinimum(0f);
-        leftAxis.setDrawGridLines(true);
+        leftAxis.setDrawGridLines(false);
+        xl.setAvoidFirstLastClipping(true);
+        leftAxis.setEnabled(true);
+
 
         YAxis rightAxis = cpuUsageChart.getAxisRight();
         rightAxis.setEnabled(false);
+    }
+
+    @Override
+    public void connectionError() {
+//        LinearLayout errorMonitoring = (LinearLayout) getActivity().findViewById(R.id.bg_error_usage);
+//        errorMonitoring.setVisibility(this.view.VISIBLE);
+//        ScrollView scrollView = (ScrollView) this.view.findViewById(R.id.sv_usage);
+//        scrollView.setVisibility(this.view.INVISIBLE);
     }
 }
