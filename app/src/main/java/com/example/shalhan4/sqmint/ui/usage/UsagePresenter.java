@@ -46,7 +46,7 @@ public class UsagePresenter {
 //        new SQMintApi().execute("http://192.168.43.118:53293/API/resource"); //laptop aten koneksi shalhan
 //        new SQMintApi().execute("http://192.168.43.215:53293/API/resource"); //laptop aten koneksi dikna
 //        new SQMintApi().execute("http://192.168.0.12:53293/API/resource"); //laptop aten koneksi dikna
-        new SQMintApi().execute("http://192.168.1.114:53293/api/resource/" + id); //laptop shalhan koneksi kosan
+        new SQMintApi().execute("http://192.168.43.13:53293/api/resource/" + id); //laptop shalhan koneksi kosan
 
 
 

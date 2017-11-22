@@ -74,6 +74,34 @@
         android:layout_alignParentEnd="true"
         android:layout_above="@+id/textView5" />
 
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView5"
+        android:text="Last Durations :" />
+
+    <TextView
+        android:id="@+id/tv_last_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_last_run_time"
+        android:layout_alignStart="@+id/tv_last_run_time"
+        android:layout_below="@+id/textView5"
+        android:text="20" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView5"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@+id/tv_last_duration"
+        android:layout_toRightOf="@+id/tv_last_duration"
+        android:text="Secs" />
 
 
 </RelativeLayout>

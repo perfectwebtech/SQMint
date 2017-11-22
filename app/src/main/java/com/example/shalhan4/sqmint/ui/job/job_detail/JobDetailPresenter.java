@@ -43,7 +43,7 @@ public class JobDetailPresenter {
 
     public void startApi()
     {
-        new SQMintApi().execute("http://192.168.1.114:53293/api/job/"+ this.serverId + "/" + this.jobId); //laptop shalhan koneksi kosan
+        new SQMintApi().execute("http://192.168.43.13:53293/api/job/"+ this.serverId + "/" + this.jobId); //laptop shalhan koneksi kosan
 
     }
 

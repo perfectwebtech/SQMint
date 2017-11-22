@@ -1,6 +1,9 @@
 package com.example.shalhan4.sqmint.ui.server;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +24,7 @@ public class ServerListAdapter extends BaseAdapter {
     private Context mContext;
     private List<Server> mServerList;
     private ServerView mServerView;
+    private SharedPreferences sharedPreferences;
 
     public ServerListAdapter(Context context, List<Server> serverList, ServerView serverView)
     {
@@ -53,6 +57,8 @@ public class ServerListAdapter extends BaseAdapter {
 
         ImageButton ibServerDelete = (ImageButton) v.findViewById(R.id.ib_server_delete);
 
+
+
         tvServerIp.setText(this.mServerList.get(position).getIpAddress());
         tvServerUsername.setText(this.mServerList.get(position).getUsername());
 
@@ -64,6 +70,12 @@ public class ServerListAdapter extends BaseAdapter {
                 mServerView.deleteServer(mServerList.get(position).getId());
             }
         });
+
+        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.mContext);
+
+        if(!this.sharedPreferences.getString("STATUS", null).equals("SUPERADMIN")) {
+            ibServerDelete.setVisibility(v.INVISIBLE);
+        }
 
         v.setTag(mServerList.get(position).getId());
         return v;

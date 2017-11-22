@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shalhan4.sqmint.R;
@@ -46,11 +47,21 @@ public class UserListAdapter extends BaseAdapter {
         TextView tvUserName = (TextView) v.findViewById(R.id.user_name);
         TextView tvLastLoginDate = (TextView) v.findViewById(R.id.tv_server_username);
         TextView tvLastLoginTime = (TextView) v.findViewById(R.id.user_last_login_time);
+        ImageView ivConnectStatus = (ImageView) v.findViewById(R.id.iv_connect_status);
+
 
         tvNip.setText(this.mUserList.get(position).getNip());
         tvUserName.setText(this.mUserList.get(position).getName());
         tvLastLoginDate.setText(this.mUserList.get(position).getLastLoginDate());
         tvLastLoginTime.setText(this.mUserList.get(position).getLastLoginTime());
+
+        if(this.mUserList.get(position).isConnected()) {
+            ivConnectStatus.setImageResource(R.drawable.ic_connect);
+        }
+        else{
+            ivConnectStatus.setImageResource(R.drawable.ic_logout);
+        }
+
 
         v.setTag(mUserList.get(position).getId());
         return v;

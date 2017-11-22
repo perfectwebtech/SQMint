@@ -26,6 +26,7 @@ public class UserDetailActivity extends AppCompatActivity implements UserDetailV
     private UserDetailListAdapter mUserDetailListAdapter;
     private List<UserDetail> mUserDetailList;
     private int USER_ID;
+    private String USER_NAME;
     private UserDetailPresenter mUserDetailPresenter;
 
 
@@ -36,6 +37,9 @@ public class UserDetailActivity extends AppCompatActivity implements UserDetailV
         setUp();
 
         this.USER_ID = getIntent().getIntExtra("USER_ID", 0);
+        this.USER_NAME = getIntent().getStringExtra("USER_NAME");
+
+
         this.mUserDetailPresenter = new UserDetailPresenter(this, this.USER_ID);
         this.mUserDetailPresenter.setUserDetailContext(this);
         this.mUserDetailPresenter.startApi();
@@ -53,6 +57,7 @@ public class UserDetailActivity extends AppCompatActivity implements UserDetailV
         //ListView
         this.userDetailName = (TextView) findViewById(R.id.tv_user_detail_name);
         this.mListView = (ListView) findViewById(R.id.lv_user_detail_list);
+
     }
 
     @Override
@@ -72,7 +77,7 @@ public class UserDetailActivity extends AppCompatActivity implements UserDetailV
 
     @Override
     public void setJobDetailListAdapter(List<UserDetail> mUserDetailList) {
-        this.userDetailName.setText("Shalhan Radifan");
+        this.userDetailName.setText(this.USER_NAME);
         this.mUserDetailListAdapter = new UserDetailListAdapter(UserDetailActivity.this, mUserDetailList);
         this.mListView.setAdapter(this.mUserDetailListAdapter);
     }

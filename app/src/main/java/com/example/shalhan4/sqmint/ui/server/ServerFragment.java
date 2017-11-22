@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -74,6 +75,10 @@ public class ServerFragment extends Fragment implements ServerView {
                 mServerPresenter.openMonitoring(mServerList.getId(), mServerList.getIpAddress());
             }
         });
+
+        this.checkIfIpAddressRunning();
+
+
         return v;
     }
 
@@ -147,7 +152,7 @@ public class ServerFragment extends Fragment implements ServerView {
         Log.i("Yeayy berhasil masuk", "yeay");
         this.mServerPresenter.startApi();
         this.alertDialog.dismiss();
-        Toast.makeText(getActivity(), "Delete server failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Delete server success", Toast.LENGTH_LONG).show();
 
     }
 
@@ -187,5 +192,47 @@ public class ServerFragment extends Fragment implements ServerView {
 
 
         Log.i("MONITORING => ", id + " " + ipAddress);
+    }
+
+    private Thread thread;
+    private Handler mHandler = new Handler();
+
+    public void checkIfIpAddressRunning()
+    {
+        if (thread != null)
+            thread.interrupt();
+
+
+        thread = new Thread(new Runnable() {
+            int i = 0;
+            public void run() {
+                while (true) {
+
+                    // Update the progress bar
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            int count = mListView.getCount();
+                            if(count > 0)
+                            {
+                                for(int i = 0; i<count; i++)
+                                {
+                                    Server mServerList = (Server) mServerAdapter.getItem(i);
+//                                    mServerPresenter.isServerReachable(mServerList.getIpAddress());
+                                }
+                            }
+                        }
+                    });
+
+                    try{
+                        Thread.sleep(5000);
+                    }
+                    catch(InterruptedException e)
+                    {
+                        break;
+                    }
+                }
+            }
+        });
+        thread.start();
     }
 }

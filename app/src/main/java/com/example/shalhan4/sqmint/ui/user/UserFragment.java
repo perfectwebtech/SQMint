@@ -54,12 +54,11 @@ public class UserFragment extends Fragment implements UserView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                mUserPresenter.getUserDetail(position);
                 User mUserList = (User) mUserAdapter.getItem(position);
                 Log.i("USER LIST BY ID ====> ", mUserList.getId() + "");
 
 
-                mUserPresenter.getUserDetail(mUserList.getId());
+                mUserPresenter.getUserDetail(mUserList.getId(), mUserList.getName());
             }
         });
 
@@ -74,10 +73,13 @@ public class UserFragment extends Fragment implements UserView {
     }
 
     @Override
-    public void openUserDetail(int id)
+    public void openUserDetail(int id, String name)
     {
         Intent intent = new Intent(getActivity(), UserDetailActivity.class);
-        intent.putExtra("USER_ID", id);
+        Bundle extras = new Bundle();
+        extras.putInt("USER_ID", id);
+        extras.putString("USER_NAME", name);
+        intent.putExtras(extras);
         startActivity(intent);
     }
 

@@ -7,6 +7,7 @@ import android.util.Log;
  */
 
 public class User {
+    boolean isConnected;
     int id;
     String name, lastLoginDate, lastLoginTime, nip;
 
@@ -20,6 +21,14 @@ public class User {
     public User()
     {
 
+    }
+
+    public boolean isConnected() {
+        return isConnected;
+    }
+
+    public void setConnected(boolean connected) {
+        isConnected = connected;
     }
 
     public int getId() {

@@ -34,9 +34,9 @@ public class UserPresenter implements UserPresenterIntf {
     }
 
     @Override
-    public void getUserDetail(int id)
+    public void getUserDetail(int id, String name)
     {
-        this.mUserView.openUserDetail(id);
+        this.mUserView.openUserDetail(id, name);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class UserPresenter implements UserPresenterIntf {
     @Override
     public void startApi()
     {
-        new SQMintApi().execute("http://192.168.1.114:53293/api/user/userlist"); //laptop shalhan koneksi kosan
+        new SQMintApi().execute("http://192.168.43.13:53293/api/user/adminlist"); //laptop shalhan koneksi kosan
     }
 
     public class SQMintApi extends AsyncTask<String, String, List<User> > {
@@ -83,6 +83,8 @@ public class UserPresenter implements UserPresenterIntf {
                         users.setId(userObject.getInt("id"));
                         users.setName(userObject.getString("name"));
                         users.setNip(userObject.getString("nip"));
+                        users.setConnected(userObject.getBoolean("isConnected"));
+
                         Log.i("last login => ", userObject.getString("lastLogin"));
                         users.setLastLogin(userObject.getString("lastLogin"));
                         userList.add(users);

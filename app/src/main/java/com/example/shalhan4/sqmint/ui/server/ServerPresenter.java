@@ -3,6 +3,8 @@ package com.example.shalhan4.sqmint.ui.server;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -21,6 +23,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -64,13 +67,13 @@ public class ServerPresenter {
     public void startApi()
     {
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context);
-        new SQMintApi().execute("http://192.168.1.114:53293/api/server"); //laptop shalhan koneksi kosan
+        new SQMintApi().execute("http://192.168.43.13:53293/api/server"); //laptop shalhan koneksi kosan
     }
 
     public void deleteServer(int id)
     {
         Log.i("SERVER ID ", id + "");
-        new SQMintApiDelete().execute("http://192.168.1.114:53293/api/server/remove/" + id);
+        new SQMintApiDelete().execute("http://192.168.43.13:53293/api/server/remove/" + id);
     }
 
     public void addServer(String ipAddress, String username, String password)
@@ -80,7 +83,12 @@ public class ServerPresenter {
         this.password = password;
         if(this.username.equals("") || this.ipAddress.equals("") || this.password.equals(""));
         else
-            new SQMintApiPost().execute("http://192.168.1.114:53293/api/server/connect");
+            new SQMintApiPost().execute("http://192.168.43.13:53293/api/server/connect");
+    }
+
+    public void isServerReachable(String ipAddress)
+    {
+        new SQMintServerChecker().execute("http://"+ipAddress+":53293");
     }
 
     public class SQMintApi extends AsyncTask<String, String, List<Server> > {
@@ -203,7 +211,7 @@ public class ServerPresenter {
 
                     int code = 204;
                     String response;
-                    if(urlConnection.getResponseCode() == 204)
+                    if(urlConnection.getResponseCode() == 202)
                     {
                         response = "SUCCESS";
                     }
@@ -239,6 +247,49 @@ public class ServerPresenter {
                 mServerView.addServerFailed();
             }
             Log.i("ADD SERVER LIST ==>", response);
+        }
+    }
+    public class SQMintServerChecker extends AsyncTask<String, String, String > {
+
+        protected String doInBackground(String... params) {
+            try {
+                URL url = new URL(params[0]);   // Change to "http://google.com" for www  test.
+                Log.i("SERVER YANG DIAWASI ", params[0]);
+                HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
+                urlc.setDoOutput(false);
+                urlc.setConnectTimeout(5000);          // 10 s.
+                urlc.connect();
+                Log.i("Http response code ", urlc.getResponseCode() + " ");
+
+                if (urlc.getResponseCode() == 200) {        // 200 = "OK" code (http connection is fine).
+                    Log.wtf("Connection Success !", params[0]);
+                    return "SUCCESS";
+                } else {
+                    Log.i("Connection Failed", params[0]);
+                    return "FAILED";
+                }
+            } catch (MalformedURLException e1) {
+                Log.e("ERROR ", "Malformed URL Exception");
+                return "FAILED";
+
+            } catch (IOException e) {
+                Log.e("ERROR ", e.getMessage());
+                return "FAILED";
+
+            }
+
+        }
+
+        protected void onPostExecute(String response) {
+            super.onPostExecute(response);
+            if(response.equals("SUCCESS"))
+            {
+
+            }
+            else
+            {
+
+            }
         }
     }
 

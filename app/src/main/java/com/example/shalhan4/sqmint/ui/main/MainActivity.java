@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity
 
         //Inisiasi MainPresenter
         this.mMainPresenter = new MainPresenter(this);
+        this.mMainPresenter.setServerContext(this);
         //Setup toolbar, navigation drawer
         setUp();
         //Default Fragment = Jobs
@@ -104,11 +106,7 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Log.i("USRNAME SBLM LOGOUT",this.sharedPreferences.getString("USERNAME", null));
-            this.sharedPreferences.edit().clear().commit();
-
-            Intent intent = new Intent(this , LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            this.mMainPresenter.logout(this.sharedPreferences.getString("ADMIN_ID", null));
         }
 
         return super.onOptionsItemSelected(item);
@@ -167,5 +165,11 @@ public class MainActivity extends AppCompatActivity
         this.mName.setText(this.sharedPreferences.getString("NAME", null));
     }
 
-
+    @Override
+    public void logoutRedirect() {
+        this.sharedPreferences.edit().clear().commit();
+        Intent intent = new Intent(this , LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 }

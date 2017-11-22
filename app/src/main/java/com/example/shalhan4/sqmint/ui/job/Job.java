@@ -12,10 +12,19 @@ public class Job {
     private String lastRunTime;
     private String lastRun;
     private String status;
+    private int lastDuration;
 
     public Job()
     {
 
+    }
+
+    public int getLastDuration() {
+        return lastDuration;
+    }
+
+    public void setLastDuration(int lastDuration) {
+        this.lastDuration = lastDuration;
     }
 
     public int getId() {

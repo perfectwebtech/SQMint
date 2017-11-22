@@ -47,12 +47,15 @@ public class JobListAdapter extends BaseAdapter {
         TextView tvJobName = (TextView) v.findViewById(R.id.tv_job_name);
         TextView tvLastRunDate = (TextView) v.findViewById(R.id.tv_last_run_date);
         TextView tvLastRunTime = (TextView) v.findViewById(R.id.tv_last_run_time);
+        TextView tvLastDuration = (TextView) v.findViewById(R.id.tv_last_duration);
+
         ImageView ivJobStatus = (ImageView) v.findViewById(R.id.iv_job_status);
 
         tvJobID.setText(this.mJobList.get(position).getJobId());
         tvJobName.setText(this.mJobList.get(position).getJobName());
         tvLastRunDate.setText(this.mJobList.get(position).getLastRunDate());
         tvLastRunTime.setText(this.mJobList.get(position).getLastRunTime());
+        tvLastDuration.setText(this.mJobList.get(position).getLastDuration() + "");
 
         if(this.mJobList.get(position).getStatus().equals("Succeeded")) {
             ivJobStatus.setImageResource(R.drawable.list_success);

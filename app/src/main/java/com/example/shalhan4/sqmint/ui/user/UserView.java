@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 public interface UserView {
-    public void openUserDetail(int id);
+    public void openUserDetail(int id, String name);
     public void openAddUser();
     public void setUserListAdapter(List<User> mUserList);
 

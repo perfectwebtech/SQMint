@@ -6,4 +6,5 @@ package com.example.shalhan4.sqmint.ui.main;
 
 public interface IMainActivity {
     public void setUp();
+    public void logoutRedirect();
 }

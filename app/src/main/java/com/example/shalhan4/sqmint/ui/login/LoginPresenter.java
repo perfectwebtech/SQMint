@@ -63,7 +63,7 @@ public class LoginPresenter implements ILoginPresenter {
             this.username = username;
             this.password = password;
 
-            new SQMintApi().execute("http://192.168.1.114:53293/token"); //koneksi kosan
+            new SQMintApi().execute("http://192.168.43.13:53293/token"); //koneksi kosan
 
 
         }

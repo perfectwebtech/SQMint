@@ -7,7 +7,7 @@ import android.content.Context;
  */
 
 public interface UserPresenterIntf {
-    public void getUserDetail(int id);
+    public void getUserDetail(int id, String name);
     public String getAccessToken();
     public void setUserContext(Context context);
     public void startApi();

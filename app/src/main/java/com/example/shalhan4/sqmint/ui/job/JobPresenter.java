@@ -41,7 +41,7 @@ public class JobPresenter implements JobPresenterIntf{
     @Override
     public void startApi(int id)
     {
-        new SQMintApi().execute("http://192.168.1.114:53293/api/job/" + id); //laptop shalhan koneksi kosan
+        new SQMintApi().execute("http://192.168.43.13:53293/api/job/" + id); //laptop shalhan koneksi kosan
     }
 
     @Override
@@ -94,8 +94,13 @@ public class JobPresenter implements JobPresenterIntf{
                         jobs.setJobName(jobObject.getString("name"));
                         jobs.setLastRun(jobObject.getString("lastRun"));
                         jobs.setStatus(jobObject.getString("lastRunOutcome"));
+                        jobs.setLastDuration(jobObject.getInt("duration"));
+
                         jobList.add(jobs);
                     }
+
+                    Log.i("JOB LIST", jobList.toString());
+
 
 
                     return jobList;
