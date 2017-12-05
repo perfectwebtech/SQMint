@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "252848755495",
+    "firebase_url": "https://sqmint-433a3.firebaseio.com",
+    "project_id": "sqmint-433a3",
+    "storage_bucket": "sqmint-433a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252848755495:android:4bcf2fee5a38975f",
+        "android_client_info": {
+          "package_name": "com.example.shalhan4.sqmint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252848755495-vghdsrlcsjb9t7alh72sbntrqm8v3pa9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTaCCkJ2upqZJDKbKBA67u7fVnCuMv_KY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

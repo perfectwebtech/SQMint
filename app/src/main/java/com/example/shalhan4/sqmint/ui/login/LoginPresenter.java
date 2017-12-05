@@ -7,6 +7,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -164,6 +166,9 @@ public class LoginPresenter implements ILoginPresenter {
                     editor.putBoolean(IS_USER_LOGGEDIN, true);
 
                     editor.commit();
+                    //firebase token
+                    String firebaseToken = FirebaseInstanceId.getInstance().getToken();
+                    Log.i("FIREBASE TOKEN ", firebaseToken);
 //                    //login
                     Log.i("USERNAME", sharedPreferences.getString(USERNAME, null));
                     Log.i("STATUS", sharedPreferences.getString(STATUS, null));

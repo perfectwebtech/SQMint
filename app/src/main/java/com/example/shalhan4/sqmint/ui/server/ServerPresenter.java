@@ -9,11 +9,6 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.example.shalhan4.sqmint.ui.job.Job;
-import com.example.shalhan4.sqmint.ui.job.JobPresenter;
-import com.example.shalhan4.sqmint.ui.job.JobView;
-import com.example.shalhan4.sqmint.ui.job.job_detail.JobDetailActivity;
-import com.example.shalhan4.sqmint.ui.user.UserPresenter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
