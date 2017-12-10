@@ -146,4 +146,9 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivity, 
         this.etPassword.setEnabled(true);
         this.bLogin.setEnabled(true);
     }
+
+    @Override
+    public void saveFirebaseToken(String adminId, String token) {
+        this.mPresenter.updateFirebaseToken(adminId, token);
+    }
 }

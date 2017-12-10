@@ -8,6 +8,7 @@ public class Server {
 
     int id;
     String ipAddress, admin, username;
+    boolean isActive;
 
     public Server(){}
 
@@ -41,5 +42,13 @@ public class Server {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

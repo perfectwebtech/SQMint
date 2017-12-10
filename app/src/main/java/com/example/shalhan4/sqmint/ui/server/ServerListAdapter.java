@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shalhan4.sqmint.R;
@@ -56,6 +57,7 @@ public class ServerListAdapter extends BaseAdapter {
         TextView tvServerUsername = (TextView) v.findViewById(R.id.tv_server_username);
 
         ImageButton ibServerDelete = (ImageButton) v.findViewById(R.id.ib_server_delete);
+        ImageView ivServerStatus = (ImageView) v.findViewById(R.id.iv_server_status);
 
 
 
@@ -75,6 +77,13 @@ public class ServerListAdapter extends BaseAdapter {
 
         if(!this.sharedPreferences.getString("STATUS", null).equals("SUPERADMIN")) {
             ibServerDelete.setVisibility(v.INVISIBLE);
+        }
+
+        if(this.mServerList.get(position).isActive()) {
+            ivServerStatus.setImageResource(R.drawable.server_active);
+        }
+        else{
+            ivServerStatus.setImageResource(R.drawable.server_down);
         }
 
         v.setTag(mServerList.get(position).getId());

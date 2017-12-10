@@ -33,6 +33,7 @@ public class LoginPresenter implements ILoginPresenter {
     private String password;
     private int count = 1;
     private Context context;
+    private String token;
 
     //shared preferences
     public static final String USERNAME = "USERNAME";
@@ -65,13 +66,26 @@ public class LoginPresenter implements ILoginPresenter {
             this.username = username;
             this.password = password;
 
-            new SQMintApi().execute("http://192.168.43.13:53293/token"); //koneksi kosan
+            new SQMintApi().execute("http://192.168.43.13:53293/request_token"); //koneksi kosan
 
 
         }
 
 //        this.mLoginActivity.loginIsValid();
 
+    }
+
+    public void updateFirebaseToken(String admin_id, String token)
+    {
+        this.token = token;
+        Log.i("ID ADMIN ", admin_id);
+        new FirebaseToken().execute("http://192.168.43.13:53293/api/admin/"+ admin_id);
+    }
+
+    public String getAccessToken()
+    {
+        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+        return this.sharedPreferences.getString(TOKEN_TYPE, null) + " " + this.sharedPreferences.getString(ACCESS_TOKEN, null);
     }
 
     public class SQMintApi extends AsyncTask<String, String, String > {
@@ -169,6 +183,7 @@ public class LoginPresenter implements ILoginPresenter {
                     //firebase token
                     String firebaseToken = FirebaseInstanceId.getInstance().getToken();
                     Log.i("FIREBASE TOKEN ", firebaseToken);
+                    mLoginActivity.saveFirebaseToken(sharedPreferences.getString(ADMIN_ID, null), firebaseToken);
 //                    //login
                     Log.i("USERNAME", sharedPreferences.getString(USERNAME, null));
                     Log.i("STATUS", sharedPreferences.getString(STATUS, null));
@@ -185,6 +200,64 @@ public class LoginPresenter implements ILoginPresenter {
             }
 
 
+        }
+    }
+
+    public class FirebaseToken extends AsyncTask<String, String, String > {
+        protected void onPreExecute()
+        {
+
+        }
+
+        protected String doInBackground(String... params) {
+
+            try {
+                URL url = new URL(params[0]);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("PUT");
+                urlConnection.setRequestProperty("Authorization", getAccessToken());
+                urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                urlConnection.setRequestProperty("charset", "utf-8");
+                urlConnection.setDoInput(true);
+                try
+                {
+                    String userAuth = "token=" + URLEncoder.encode(token, "UTF-8");
+                    Log.i("SIMPEN FIREBASE TOKEN", token);
+
+
+                    DataOutputStream os = new DataOutputStream(urlConnection.getOutputStream());
+                    os.writeBytes(userAuth);
+//                    Log.i("HARUSNYA BERHASIL", urlConnection.getResponseMessage());
+                    Log.i("HARUSNYA 204", urlConnection.getResponseCode() + "");
+                    os.flush();
+                    os.close ();
+                    String response;
+                    if(urlConnection.getResponseCode() == 400)
+                    {
+                        Log.i("UPDATE FIREBAS GAGAL", urlConnection.getResponseCode() + "");
+                        response = "FAILED";
+                    }
+                    else
+                    {
+                        Log.i("UPDATE FIREBAS BERHASIL", urlConnection.getResponseCode() + "");
+                        response = "SUCCESS";
+                    }
+
+                    return response;
+
+                }
+                finally{
+                    urlConnection.disconnect();
+                }
+            }
+            catch(Exception e) {
+                Log.e("ERROR", e.getMessage(), e);
+                return null;
+            }
+        }
+
+        protected void onPostExecute(String response) {
+            super.onPostExecute(response);
         }
     }
 }

@@ -18,4 +18,6 @@ public interface ILoginActivity {
     void disableComponent();
 
     void enableComponent();
+
+    void saveFirebaseToken(String adminId, String token);
 }

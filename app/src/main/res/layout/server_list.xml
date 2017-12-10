@@ -49,4 +49,16 @@
         android:focusable="false"
         android:focusableInTouchMode="false"/>
 
+    <ImageView
+        android:id="@+id/iv_server_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_server_username"
+        android:layout_alignLeft="@+id/tv_server_username"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tv_server_username"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        app:srcCompat="@drawable/server_active" />
+
 </RelativeLayout>

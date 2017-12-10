@@ -116,6 +116,7 @@ public class ServerPresenter {
                             servers.setId(jobObject.getInt("id"));
                             servers.setIpAddress(jobObject.getString("ipAddress"));
                             servers.setUsername(jobObject.getString("userId"));
+                            servers.setActive(jobObject.getBoolean("isActive"));
                             serverList.add(servers);
                         }
 
