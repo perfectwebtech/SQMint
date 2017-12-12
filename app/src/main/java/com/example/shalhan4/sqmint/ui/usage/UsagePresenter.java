@@ -83,18 +83,39 @@ public class UsagePresenter {
 
                     List<Usage> usageList = new ArrayList<>();
                     JSONObject usageObject = new JSONObject(result);
+
+                    JSONObject resource = usageObject.getJSONObject("resourcesUsage");
+                    JSONArray drive = usageObject.getJSONArray("drivesSpace");
+                    //CPU and Memory
                     Usage usages = new Usage();
-                    usages.setId(usageObject.getInt("id"));
-                    usages.setAvailableMemory(usageObject.getDouble("availableMemory"));
-                    usages.setProcessorUsage(usageObject.getDouble("processorUsage"));
+                    usages.setId(resource.getInt("id"));
+                    usages.setAvailableMemory(resource.getDouble("availableMemory"));
+                    usages.setProcessorUsage(resource.getDouble("cpuBusy"));
+
+                    int driveLength = drive.length();
+                    List<Drive> driveList = new ArrayList<>();
+                    for(int i = 0; i<driveLength; i++)
+                    {
+                        JSONObject o = new JSONObject(drive.get(i).toString());
+                        Drive mDrive = new Drive();
+                        mDrive.setId(o.getInt("id"));
+                        mDrive.setDriveName(o.getString("driveName"));
+                        mDrive.setAvailableSpace(o.getString("availabeSpace"));
+                        mDrive.setTotalSpace(o.getString("totalSpace"));
+                        driveList.add(mDrive);
+                        Log.i("DRIVE => ", o.getInt("id") + "");
+                    }
+
+                    usages.setListDrive(driveList);
+
                     usageList.add(usages);
 
                     return usageList;
-
                 }
                 catch (JSONException e)
                 {
                     List<Usage> usageList = new ArrayList<>();
+                    Log.e("ERROR", e.getMessage());
                     return usageList;
                 }
                 finally{

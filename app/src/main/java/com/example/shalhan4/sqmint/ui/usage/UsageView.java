@@ -14,4 +14,5 @@ public interface UsageView {
     public void addEntryMemoryUsage();
     public void addEntryCpuUsage();
     public void connectionError();
+    public void setDriveListAdapter(List<Usage> mUsage);
 }

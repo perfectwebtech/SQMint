@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 
 import com.example.shalhan4.sqmint.R;
+import com.example.shalhan4.sqmint.ui.job.JobListAdapter;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -38,6 +40,8 @@ public class UsageFragment extends Fragment implements UsageView{
     private int SERVER_ID;
     private View view;
     private Thread threadUsage;
+    private ListView mListView;
+    private DriveListAdapter mDriveAdapter;
 
     public UsageFragment() {
         // Required empty public constructor
@@ -56,6 +60,8 @@ public class UsageFragment extends Fragment implements UsageView{
         this.mUsagePresenter = new UsagePresenter(this);
 
         this.mUsagePresenter.setUsageContext(getActivity());
+        this.mListView = (ListView) v.findViewById(R.id.drive_list);
+
 
         memoryUsageChart = (LineChart) v.findViewById(R.id.memory_chart);
         cpuUsageChart = (LineChart) v.findViewById(R.id.cpu_chart);
@@ -138,6 +144,7 @@ public class UsageFragment extends Fragment implements UsageView{
         this.mUsage =  value;
         addEntryMemoryUsage();
         addEntryCpuUsage();
+        setDriveListAdapter(value);
     }
 
     private LineDataSet createSet(String desc) {
@@ -291,6 +298,12 @@ public class UsageFragment extends Fragment implements UsageView{
 
         YAxis rightAxis = cpuUsageChart.getAxisRight();
         rightAxis.setEnabled(false);
+    }
+
+    @Override
+    public void setDriveListAdapter(List<Usage> mUsage) {
+        this.mDriveAdapter = new DriveListAdapter(getActivity(), mUsage.get(0).getListDrive());
+        this.mListView.setAdapter(mDriveAdapter);
     }
 
     @Override

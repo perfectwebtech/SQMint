@@ -21,127 +21,72 @@
             android:text="Failed to connect to server. Please check your connection and your IP Address" />
     </LinearLayout>
     <!-- TODO: Update blank fragment layout -->
-    <ScrollView
-        android:id="@+id/sv_usage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="24dp">
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Harddisk"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="18sp"
+            android:layout_marginBottom="15dp"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/drive_list"
+            android:layout_below="@id/textView19"
+            android:layout_marginBottom="24dp"/>
+
+        <ScrollView
+            android:id="@+id/sv_usage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="24dp">
+            android:layout_below="@id/drive_list">
 
-            <RelativeLayout
-                android:id="@+id/hardisk_card"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="24dp">
 
-                <TextView
-                    android:id="@+id/textView16"
-                    android:layout_width="wrap_content"
+            <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorTextBlack"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="24dp"
-                    android:text="Hardisk" />
+                    android:orientation="vertical"
+                   >
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="CPU Busy"
+                        android:textColor="@color/colorTextBlack"
+                        android:textSize="18sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorTextBlack"
-                    android:textSize="32sp"
-                    android:text="C://"
-                    android:layout_below="@+id/textView16"
-                    android:id="@+id/textView18" />
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/cpu_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:layout_marginTop="20dp"/>
 
-                <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="79dp"
-                    android:layout_marginStart="79dp"
-                    android:text="Available"
-                    android:layout_above="@+id/textView18"
-                    android:layout_toRightOf="@+id/textView16"
-                    android:layout_toEndOf="@+id/textView16" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/cpu_chart"
+                        android:layout_marginTop="24dp"
+                        android:text="Memory Usage"
+                        android:textColor="@color/colorTextBlack"
+                        android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignTop="@+id/textView17"
-                    android:layout_marginEnd="44dp"
-                    android:layout_marginRight="44dp"
-                    android:text="Total" />
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/memory_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:layout_marginBottom="120dp"
+                        android:layout_marginTop="20dp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textView20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/textView18"
-                    android:layout_alignBottom="@+id/textView18"
-                    android:layout_marginEnd="57dp"
-                    android:layout_marginRight="57dp"
-                    android:layout_toLeftOf="@+id/textView21"
-                    android:layout_toStartOf="@+id/textView21"
-                    android:text="5.45 GB"
-                    android:textColor="@color/colorTextBlack"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/textView21"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/textView20"
-                    android:layout_alignBottom="@+id/textView20"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:text="117 GB"
-                    android:textColor="@color/colorTextBlack"
-                    android:textSize="24sp" />
-            </RelativeLayout>
-
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="CPU Busy"
-                android:textColor="@color/colorTextBlack"
-                android:textSize="18sp"
-                android:layout_below="@+id/hardisk_card"/>
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/cpu_chart"
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:layout_marginTop="142dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/cpu_chart"
-                android:layout_marginTop="24dp"
-                android:text="Memory Usage"
-                android:textColor="@color/colorTextBlack"
-                android:textSize="18sp" />
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/memory_chart"
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:layout_marginBottom="120dp"
-                android:layout_marginTop="550dp" />
-
-        </RelativeLayout>
-    </ScrollView>
+        </ScrollView>
+    </RelativeLayout>
 </FrameLayout>
