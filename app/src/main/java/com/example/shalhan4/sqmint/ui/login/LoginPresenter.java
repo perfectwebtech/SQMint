@@ -19,6 +19,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -176,7 +178,14 @@ public class LoginPresenter implements ILoginPresenter {
                     editor.putString(ADMIN_ID, userObj.getString("admin_id"));
                     editor.putString(ACCESS_TOKEN, userObj.getString("access_token"));
                     editor.putString(TOKEN_TYPE, userObj.getString("token_type"));
-                    editor.putString(EXPIRES_IN, userObj.getString("expires_in"));
+
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date();
+                    long HOUR = 3600*1000;
+                    int expireHour = Integer.parseInt(userObj.getString("expires_in"));
+                    Date expireDate = new Date(date.getTime() + (expireHour/3600) * HOUR);
+
+                    editor.putString(EXPIRES_IN, df.format(expireDate).toString());
                     editor.putBoolean(IS_USER_LOGGEDIN, true);
 
                     editor.commit();

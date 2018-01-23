@@ -34,7 +34,7 @@ public class MainPresenter implements IMainPresenter{
     public void logout(String id)
     {
         Log.i("ADMIN LOGOUT", id);
-        new SQMintApi().execute("http://192.168.43.13:53293/api/disconnect/" + id);
+        new SQMintApi().execute("http://192.168.43.13:53293/api/logout/" + id);
     }
 
     public void setServerContext(Context context) {

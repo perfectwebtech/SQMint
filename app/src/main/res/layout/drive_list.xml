@@ -49,23 +49,27 @@
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Total"
+        android:textSize="12sp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
         android:layout_alignBaseline="@+id/tv_total_space"
         android:layout_alignBottom="@+id/tv_total_space"
-        android:layout_toEndOf="@+id/tv_total_space"
         android:layout_toRightOf="@+id/tv_total_space"
-        android:text="Total"
-        android:textSize="12sp" />
+        android:layout_toEndOf="@+id/tv_total_space" />
 
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Available"
+        android:textSize="12sp"
         android:layout_alignBaseline="@+id/tv_available_space"
         android:layout_alignBottom="@+id/tv_available_space"
-        android:layout_toEndOf="@+id/tv_available_space"
         android:layout_toRightOf="@+id/tv_available_space"
-        android:text="Available"
-        android:textSize="12sp" />
+        android:layout_toEndOf="@+id/tv_available_space"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp" />
 
 
 </RelativeLayout>

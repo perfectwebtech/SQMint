@@ -1,16 +1,11 @@
 package com.example.shalhan4.sqmint.ui.main;
 
-import android.app.AlertDialog;
-import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -21,17 +16,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.shalhan4.sqmint.R;
-import com.example.shalhan4.sqmint.ui.job.JobFragment;
 import com.example.shalhan4.sqmint.ui.login.LoginActivity;
 import com.example.shalhan4.sqmint.ui.server.ServerFragment;
-import com.example.shalhan4.sqmint.ui.usage.UsageFragment;
 import com.example.shalhan4.sqmint.ui.user.UserFragment;
-import com.example.shalhan4.sqmint.ui.user.add_user.AddUserActivity;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static android.R.attr.format;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, IMainActivity {
@@ -49,12 +46,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.checkIfTokenExpire();
         if(!this.sharedPreferences.getBoolean("IS_USER_LOGGEDIN", false))
         {
             Intent intent = new Intent(this , LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
+
 
 
         //Inisiasi MainPresenter
@@ -171,5 +170,34 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this , LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    private void checkIfTokenExpire(){
+        Log.i("EXPIRES IN ", this.sharedPreferences.getString("EXPIRES_IN", ""));
+        String expireDateStr = this.sharedPreferences.getString("EXPIRES_IN", "");
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date expireDate = sd.parse(expireDateStr);
+            Date date = new Date();
+            String dateStr = sd.format(date);
+            Date dateNow = sd.parse(dateStr);
+
+            Log.i("EXPIRES EXPIRES ", expireDate.toString());
+            Log.i("EXPIRES DATE NOW ",dateNow.toString());
+
+
+            if(expireDate.before(dateNow))
+            {
+                Log.i("SUDAH KADALUARSA", "YEAY");
+                this.mMainPresenter.logout(this.sharedPreferences.getString("ADMIN_ID", null));
+            }
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.i("PARSE ERROR", e.toString());
+
+        }
+
     }
 }

@@ -74,7 +74,7 @@ public class AddUserPresenter implements AddUserPresenterIntf {
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setReadTimeout(20000);
                 urlConnection.setConnectTimeout(20000);
-                urlConnection.setRequestMethod("PUT");
+                urlConnection.setRequestMethod("POST");
                 urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 urlConnection.setRequestProperty("charset", "utf-8");
                 urlConnection.setRequestProperty("Authorization", getAccessToken());
