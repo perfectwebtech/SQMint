@@ -54,7 +54,10 @@ public class UserListAdapter extends BaseAdapter {
         tvUserName.setText(this.mUserList.get(position).getName());
         tvLastLoginDate.setText(this.mUserList.get(position).getLastLoginDate());
         tvLastLoginTime.setText(this.mUserList.get(position).getLastLoginTime());
-
+        if(this.mUserList.get(position).getOnlineStatus() == 1)
+            ivConnectStatus.setImageResource(R.drawable.ic_connect);
+        else
+            ivConnectStatus.setImageResource(R.drawable.ic_logout);
 
         v.setTag(mUserList.get(position).getId());
         return v;

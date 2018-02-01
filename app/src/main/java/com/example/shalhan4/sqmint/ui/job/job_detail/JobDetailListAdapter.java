@@ -50,7 +50,7 @@ public class JobDetailListAdapter extends BaseAdapter {
 
         tvRunDate.setText(this.mJobDetailList.get(position).getRunDate());
         tvRunTime.setText(this.mJobDetailList.get(position).getRunTime());
-        tvDuration.setText(this.mJobDetailList.get(position).getDuration());
+        tvDuration.setText(this.mJobDetailList.get(position).getDuration() + " sec");
 
         if(this.mJobDetailList.get(position).getStatus().equals("Succeeded")) {
             ivJobStatus.setImageResource(R.drawable.list_success);

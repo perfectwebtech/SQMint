@@ -92,16 +92,5 @@
         android:layout_below="@+id/textView5"
         android:text="20" />
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView5"
-        android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp"
-        android:layout_toEndOf="@+id/tv_last_duration"
-        android:layout_toRightOf="@+id/tv_last_duration"
-        android:text="Secs" />
-
 
 </RelativeLayout>

@@ -1,6 +1,8 @@
 package com.example.shalhan4.sqmint.ui.job;
 
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -55,6 +57,7 @@ public class JobFragment extends Fragment implements JobView {
         this.view = v;
         mJobPresenter.setJobContext(getActivity());
         mJobPresenter.startApi(this.SERVER_ID);
+
 
         this.mListView = (ListView) v.findViewById(R.id.job_list);
 

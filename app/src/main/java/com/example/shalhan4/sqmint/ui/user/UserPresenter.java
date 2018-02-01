@@ -83,6 +83,7 @@ public class UserPresenter implements UserPresenterIntf {
                         users.setId(userObject.getInt("id"));
                         users.setName(userObject.getString("name"));
                         users.setNip(userObject.getString("nip"));
+                        users.setOnlineStatus(userObject.getInt("isOnline"));
 
                         Log.i("last login => ", userObject.getString("lastLogin"));
                         users.setLastLogin(userObject.getString("lastLogin"));

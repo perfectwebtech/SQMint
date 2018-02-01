@@ -45,8 +45,13 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Inisiasi MainPresenter
+        this.mMainPresenter = new MainPresenter(this);
+        this.mMainPresenter.setServerContext(this);
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.checkIfTokenExpire();
+        this.setStatusOnline();
+
         if(!this.sharedPreferences.getBoolean("IS_USER_LOGGEDIN", false))
         {
             Intent intent = new Intent(this , LoginActivity.class);
@@ -56,9 +61,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        //Inisiasi MainPresenter
-        this.mMainPresenter = new MainPresenter(this);
-        this.mMainPresenter.setServerContext(this);
+
         //Setup toolbar, navigation drawer
         setUp();
         //Default Fragment = Jobs
@@ -75,6 +78,16 @@ public class MainActivity extends AppCompatActivity
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
+        else
+        {
+            this.setStatusOnline();
+
+        }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.setStatusOffline();
     }
 
     @Override
@@ -104,8 +117,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Log.i("USRNAME SBLM LOGOUT",this.sharedPreferences.getString("USERNAME", null));
-            this.mMainPresenter.logout(this.sharedPreferences.getString("ADMIN_ID", null));
+            Log.i("USRNAME SBLM LOGOUT",this.sharedPreferences.getString("USERNAME", ""));
+            this.mMainPresenter.logout(this.sharedPreferences.getString("ADMIN_ID", ""));
         }
 
         return super.onOptionsItemSelected(item);
@@ -164,6 +177,7 @@ public class MainActivity extends AppCompatActivity
         this.mName.setText(this.sharedPreferences.getString("NAME", null));
     }
 
+
     @Override
     public void logoutRedirect() {
         this.sharedPreferences.edit().clear().commit();
@@ -188,8 +202,8 @@ public class MainActivity extends AppCompatActivity
 
             if(expireDate.before(dateNow))
             {
-                Log.i("SUDAH KADALUARSA", "YEAY");
-                this.mMainPresenter.logout(this.sharedPreferences.getString("ADMIN_ID", null));
+                Log.i("SUDAH KADALUARSA", this.sharedPreferences.getString("ADMIN_ID", ""));
+                this.mMainPresenter.logout(this.sharedPreferences.getString("ADMIN_ID", ""));
             }
 
 
@@ -198,6 +212,17 @@ public class MainActivity extends AppCompatActivity
             Log.i("PARSE ERROR", e.toString());
 
         }
+
+    }
+
+    private void setStatusOnline()
+    {
+        this.mMainPresenter.online(this.sharedPreferences.getString("ADMIN_ID", ""));
+    }
+
+    private void setStatusOffline()
+    {
+        this.mMainPresenter.offline(this.sharedPreferences.getString("ADMIN_ID", ""));
 
     }
 }

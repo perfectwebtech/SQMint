@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class User {
     boolean isConnected;
-    int id;
+    int id, onlineStatus;
     String name, lastLoginDate, lastLoginTime, nip;
 
     public User(int id, String name, String lastLoginDate, String lastLoginTime) {
@@ -83,5 +83,13 @@ public class User {
             setLastLoginDate(splitted[0]);
             setLastLoginTime(splitted[1]);
         }
+    }
+
+    public int getOnlineStatus() {
+        return onlineStatus;
+    }
+
+    public void setOnlineStatus(int onlineStatus) {
+        this.onlineStatus = onlineStatus;
     }
 }

@@ -7,6 +7,8 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.example.shalhan4.sqmint.ui.main.MainPresenter;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -53,6 +55,8 @@ public class JobPresenter implements JobPresenterIntf{
 
     }
 
+
+
     @Override
     public void setJobContext(Context context)
     {
@@ -82,6 +86,7 @@ public class JobPresenter implements JobPresenterIntf{
                     }
                     bufferedReader.close();
                     String result = stringBuilder.toString();
+                    Log.i("JOB LIST ", result);
                     List<Job> jobList = new ArrayList<>();
                     JSONArray jobArray = new JSONArray(result);
                     int length = jobArray.length();
@@ -125,5 +130,7 @@ public class JobPresenter implements JobPresenterIntf{
             mJobView.setJobListAdapter(response);
         }
     }
+
+
 
 }
