@@ -9,15 +9,19 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shalhan4.sqmint.R;
 import com.example.shalhan4.sqmint.ui.job.job_detail.JobDetailActivity;
@@ -37,10 +41,12 @@ import java.util.List;
  */
 public class JobFragment extends Fragment implements JobView {
     private ListView mListView;
+    private List<Job> jobList;
     private JobListAdapter mJobAdapter;
     private JobPresenter mJobPresenter;
     private int SERVER_ID;
     private View view;
+    private EditText mSearch;
 
 
     public JobFragment() {
@@ -73,6 +79,43 @@ public class JobFragment extends Fragment implements JobView {
             }
         });
 
+        this.mSearch = (EditText) v.findViewById(R.id.et_search_job);
+        this.mSearch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().equals(""))
+                {
+                    setJobListAdapter(jobList);
+                    Log.i("EMPTY STRING ", "YEAY");
+                    return;
+                }
+                int size = jobList.size();
+                List<Job> searchResult = new ArrayList<Job>();
+                for(int i = 0; i< size; i++)
+                {
+                    if(jobList.get(i).getJobName().toLowerCase().contains(s))
+                    {
+                        searchResult.add(jobList.get(i));
+                        Log.i("SEARCH RESULT ", jobList.get(i).getJobName() + " " + jobList.get(i).getId());
+
+                    }
+                }
+
+                mJobAdapter = new JobListAdapter(getActivity(), searchResult);
+                mListView.setAdapter(mJobAdapter);
+
+            }
+        });
 
         return v;
     }
@@ -91,6 +134,7 @@ public class JobFragment extends Fragment implements JobView {
     @Override
     public void setJobListAdapter(List<Job> mJobList)
     {
+        this.jobList = mJobList;
         this.mJobAdapter = new JobListAdapter(getActivity(), mJobList);
         this.mListView.setAdapter(mJobAdapter);
     }
