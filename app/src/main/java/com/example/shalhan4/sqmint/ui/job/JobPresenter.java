@@ -76,7 +76,6 @@ public class JobPresenter implements JobPresenterIntf{
                 URL url = new URL(params[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestProperty("Authorization", getAccessToken());
-                Log.i("ACCESS TOKEN ", getAccessToken());
                 try {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                     StringBuilder stringBuilder = new StringBuilder();
@@ -86,7 +85,8 @@ public class JobPresenter implements JobPresenterIntf{
                     }
                     bufferedReader.close();
                     String result = stringBuilder.toString();
-                    Log.i("JOB LIST ", result);
+                    Log.i("JOB LIST ===> ", result);
+
                     List<Job> jobList = new ArrayList<>();
                     JSONArray jobArray = new JSONArray(result);
                     int length = jobArray.length();
@@ -100,16 +100,10 @@ public class JobPresenter implements JobPresenterIntf{
                         jobs.setLastRun(jobObject.getString("lastRun"));
                         jobs.setStatus(jobObject.getString("lastRunOutcome"));
                         jobs.setLastDuration(jobObject.getInt("duration"));
-
                         jobList.add(jobs);
+
                     }
-
-                    Log.i("JOB LIST", jobList.toString());
-
-
-
                     return jobList;
-
                 }
                 finally{
                     urlConnection.disconnect();

@@ -101,9 +101,11 @@ public class ServerFragment extends Fragment implements ServerView {
             @Override
             public void onClick(View view)
             {
-                Log.i("HALO => ", "HALO JUGA");
                 mBtnLogin.setEnabled(false);
-                mServerPresenter.addServer(mIp.getText().toString(), mUsername.getText().toString(), mPassword.getText().toString() );
+                mServerPresenter.addServer(mIp.getText().toString(),
+                        mUsername.getText().toString(),
+                        mPassword.getText().toString()
+                );
             }
         });
     }

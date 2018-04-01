@@ -197,27 +197,16 @@ public class ServerPresenter {
                     String userAuth = "userId=" + URLEncoder.encode(username, "UTF-8") +
                             "&password=" + URLEncoder.encode(password, "UTF-8") +
                             "&ipaddress=" + URLEncoder.encode(ipAddress, "UTF-8");
-                    Log.i("START OUTPUT STREAM", username + " " + password + " " + ipAddress + " " + userAuth);
-
                     DataOutputStream os = new DataOutputStream(urlConnection.getOutputStream());
                     os.writeBytes(userAuth);
-                    Log.i("HARUSNYA 204", urlConnection.getResponseCode() + "");
                     os.flush();
                     os.close ();
-
                     int code = 204;
                     String response;
                     if(urlConnection.getResponseCode() == 202)
-                    {
                         response = "SUCCESS";
-                    }
                     else
-                    {
                         response = "FAILED";
-                    }
-
-                    Log.i("INI HASILNYA", response + urlConnection.getResponseCode());
-
                     return response;
                 }
                 finally{
